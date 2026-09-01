@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import { resetPassword } from "../../api/auth";
 
-import BackButton from "../../components/BackButton";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 

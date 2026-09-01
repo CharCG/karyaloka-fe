@@ -1,5 +1,4 @@
 const ACCESS_TOKEN_KEY = "accessToken";
-const ONBOARDING_KEY = "onboardingCompleted";
 const ROLE_KEY = "userRole";
 
 export const storage = {
@@ -25,13 +24,5 @@ export const storage = {
 
   clearRole(): void {
     localStorage.removeItem(ROLE_KEY);
-  },
-
-  hasCompletedOnboarding(): boolean {
-    return localStorage.getItem(ONBOARDING_KEY) === "true";
-  },
-
-  completeOnboarding(): void {
-    localStorage.setItem(ONBOARDING_KEY, "true");
   },
 };
