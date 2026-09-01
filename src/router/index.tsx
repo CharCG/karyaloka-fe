@@ -12,6 +12,9 @@ import ResetPassword from "../pages/auth/ResetPassword";
 import Home from "../pages/client/Home";
 import Discover from "../pages/freelancer/Discover";
 
+import TermsOfService from "../pages/TermsOfService";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
+
 import ProtectedRoute from "./ProtectedRoute";
 import RoleRoute from "./RoleRoute";
 import GuestRoute from "./GuestRoute";
@@ -19,6 +22,8 @@ import GuestRoute from "./GuestRoute";
 export const router = createBrowserRouter([
   { path: "/", element: <SplashScreen /> },
   { path: "/onboarding", element: <Onboarding /> },
+  { path: "/terms", element: <TermsOfService /> },
+  { path: "/privacy", element: <PrivacyPolicy /> },
   {
     path: "/auth",
     element: <GuestRoute />,
