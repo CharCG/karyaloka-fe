@@ -28,7 +28,7 @@ export default function TermsOfService() {
             Karyaloka's platform for personal, non-commercial transitory viewing only. This is the grant of a license,
             not a transfer of title, and under this license you may not:
           </p>
-          <ul className="list-disc list-inside space-y-2 mt-3">
+          <ul className="list-disc list-inside">
             <li>Modifying or copying the materials</li>
             <li>Using the materials for any commercial purpose or for any public display</li>
             <li>Attempting to decompile or reverse engineer any software contained on the Service</li>
@@ -97,7 +97,7 @@ export default function TermsOfService() {
             You agree not to engage in any conduct that restricts or inhibits anyone's use or enjoyment of the Service.
             Prohibited behavior includes:
           </p>
-          <ul className="list-disc list-inside space-y-2 mt-3">
+          <ul className="list-disc list-inside">
             <li>Harassing or causing distress or inconvenience to any person</li>
             <li>Offending the dignity of any person</li>
             <li>Disrupting the normal flow of dialogue</li>

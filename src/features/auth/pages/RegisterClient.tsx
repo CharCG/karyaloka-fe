@@ -76,7 +76,7 @@ export default function RegisterClient() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 flex-1">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <Input
           label="Full Name"
           name="fullName"
@@ -141,7 +141,7 @@ export default function RegisterClient() {
           </label>
         </div>
 
-        <div className="mt-auto">
+        <div className="mt-16">
           <Button type="submit" disabled={loading}>
             {loading ? "Creating Account..." : "Create Account"}
           </Button>

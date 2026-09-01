@@ -60,7 +60,7 @@ export default function Login() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 flex-1">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <Input
           label="Email Address / Phone Number"
           name="identifier"
@@ -86,7 +86,7 @@ export default function Login() {
           </div>
         </div>
 
-        <div className="mt-auto">
+        <div className="mt-16">
           <Button type="submit" disabled={loading}>
             {loading ? "Signing In..." : "Sign In"}
           </Button>
