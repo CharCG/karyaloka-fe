@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
-import { login } from "../../api/auth";
-import { storage } from "../../lib/storage";
+import { login } from "../api/auth";
+import { storage } from "../../../shared/lib/storage";
 
-import BackButton from "../../components/BackButton";
-import Button from "../../components/Button";
-import Input from "../../components/Input";
+import BackButton from "../../../shared/components/BackButton";
+import Button from "../../../shared/components/Button";
+import Input from "../../../shared/components/Input";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -54,7 +54,11 @@ export default function Login() {
         <p className="text-body text-text-secondary">Your next great match is waiting.</p>
       </div>
 
-      {error && <div className="mb-4 p-4 text-body-sm text-error bg-error-bg border border-error-border rounded-lg">{error}</div>}
+      {error && (
+        <div className="mb-4 p-4 text-body-sm text-error bg-error-bg border border-error-border rounded-lg">
+          {error}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 flex-1">
         <Input

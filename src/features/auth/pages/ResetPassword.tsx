@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router";
-import { resetPassword } from "../../api/auth";
+import { resetPassword } from "../api/auth";
 
-import Button from "../../components/Button";
-import Input from "../../components/Input";
+import Button from "../../../shared/components/Button";
+import Input from "../../../shared/components/Input";
 
 export default function ResetPassword() {
   const navigate = useNavigate();

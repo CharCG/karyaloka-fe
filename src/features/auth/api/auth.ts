@@ -1,4 +1,4 @@
-import { apiClient } from "./client";
+import { apiClient } from "../../../shared/lib/client";
 
 export type Role = "client" | "freelancer";
 

@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router";
-import type { Role } from "../api/auth";
-import { storage } from "../lib/storage";
+import type { Role } from "../features/auth/api/auth";
+import { storage } from "../shared/lib/storage";
 
 interface RoleRouteProps {
   allowedRoles: Role[];

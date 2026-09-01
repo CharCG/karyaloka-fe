@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import { storage } from "../lib/storage";
+import { storage } from "../../../shared/lib/storage";
 
-import Logo from "../assets/icons/logo.svg";
+import Logo from "../../../assets/icons/logo.svg?react";
 
 export default function SplashScreen() {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export default function SplashScreen() {
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-primary">
-      <img src={Logo} alt="Logo" className="w-32" />
+      <Logo className="w-32" />
     </main>
   );
 }

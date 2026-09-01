@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 
-import RoleCard from "../components/auth/RoleCard";
-import Button from "../components/Button";
-import BackButton from "../components/BackButton";
+import { RoleCard } from "../";
+import Button from "../../../shared/components/Button";
+import BackButton from "../../../shared/components/BackButton";
 
-import Client from "../assets/images/client.png";
-import Freelancer from "../assets/images/freelancer.png";
+import Client from "../../../assets/images/client.png";
+import Freelancer from "../../../assets/images/freelancer.png";
 
 export default function Onboarding() {
   const [selectedRole, setSelectedRole] = useState<"client" | "freelancer" | null>(null);

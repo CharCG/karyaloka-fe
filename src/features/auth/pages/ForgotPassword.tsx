@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { forgotPassword } from "../../api/auth";
+import { forgotPassword } from "../api/auth";
 
-import BackButton from "../../components/BackButton";
-import Button from "../../components/Button";
-import Input from "../../components/Input";
+import BackButton from "../../../shared/components/BackButton";
+import Button from "../../../shared/components/Button";
+import Input from "../../../shared/components/Input";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");

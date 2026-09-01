@@ -1,19 +1,9 @@
 import { createBrowserRouter } from "react-router";
 
-import SplashScreen from "../pages/SplashScreen";
-import Onboarding from "../pages/Onboarding";
-
-import Login from "../pages/auth/Login";
-import RegisterClient from "../pages/auth/RegisterClient";
-import RegisterFreelancer from "../pages/auth/RegisterFreelancer";
-import ForgotPassword from "../pages/auth/ForgotPassword";
-import ResetPassword from "../pages/auth/ResetPassword";
-
-import Home from "../pages/client/Home";
-import Discover from "../pages/freelancer/Discover";
-
-import TermsOfService from "../pages/TermsOfService";
-import PrivacyPolicy from "../pages/PrivacyPolicy";
+import { SplashScreen, Onboarding, TermsOfService, PrivacyPolicy } from "../features/onboarding";
+import { Login, RegisterClient, RegisterFreelancer, ForgotPassword, ResetPassword } from "../features/auth";
+import { ClientHome } from "../features/client";
+import { FreelancerDiscover } from "../features/freelancer";
 
 import ProtectedRoute from "./ProtectedRoute";
 import RoleRoute from "./RoleRoute";
@@ -40,11 +30,11 @@ export const router = createBrowserRouter([
     children: [
       {
         element: <RoleRoute allowedRoles={["client"]} />,
-        children: [{ path: "/client", element: <Home /> }],
+        children: [{ path: "/client", element: <ClientHome /> }],
       },
       {
         element: <RoleRoute allowedRoles={["freelancer"]} />,
-        children: [{ path: "/freelancer", element: <Discover /> }],
+        children: [{ path: "/freelancer", element: <FreelancerDiscover /> }],
       },
     ],
   },

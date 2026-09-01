@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes } from "react";
 import { useNavigate } from "react-router";
 
-import ArrowLeftIcon from "../assets/icons/arrow-left.svg?react";
+import ArrowLeftIcon from "../../assets/icons/arrow-left.svg?react";
 
 interface BackButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "surface";

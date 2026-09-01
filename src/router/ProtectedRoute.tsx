@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useLocation } from "react-router";
-import { storage } from "../lib/storage";
+import { storage } from "../shared/lib/storage";
 
 export default function ProtectedRoute() {
   const location = useLocation();

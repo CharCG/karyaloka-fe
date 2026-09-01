@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
-import { register } from "../../api/auth";
-import { storage } from "../../lib/storage";
+import { register } from "../api/auth";
+import { storage } from "../../../shared/lib/storage";
 
-import BackButton from "../../components/BackButton";
-import Button from "../../components/Button";
-import Input from "../../components/Input";
+import BackButton from "../../../shared/components/BackButton";
+import Button from "../../../shared/components/Button";
+import Input from "../../../shared/components/Input";
 
 export default function RegisterClient() {
   const navigate = useNavigate();
@@ -44,13 +44,13 @@ export default function RegisterClient() {
         fullName: formData.fullName,
         email: formData.email,
         password: formData.password,
-        role: "freelancer",
+        role: "client",
         phone: formData.phone,
       });
 
       storage.setAccessToken(res.accessToken);
       storage.setRole(res.user.role);
-      navigate("/freelancer", { replace: true });
+      navigate("/client", { replace: true });
     } catch (err: any) {
       setError(err.response?.data?.message || "Failed to create account. Please try again.");
     } finally {
@@ -65,12 +65,16 @@ export default function RegisterClient() {
       </div>
 
       <div className="mb-8">
-        <h2 className="text-h2 italic font-serif text-text-primary">Let's Work!</h2>
+        <h2 className="text-h2 italic font-serif text-text-primary">Let's Roll!</h2>
         <h1 className="text-h1 font-bold text-text-primary mb-2">Create an Account</h1>
         <p className="text-body text-text-secondary">Ready to get started? Let's set up your account.</p>
       </div>
 
-      {error && <div className="mb-4 p-4 text-body-sm text-error bg-error-bg border border-error-border rounded-lg">{error}</div>}
+      {error && (
+        <div className="mb-4 p-4 text-body-sm text-error bg-error-bg border border-error-border rounded-lg">
+          {error}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 flex-1">
         <Input
