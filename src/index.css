@@ -3,7 +3,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #2868d8;
+  --color-primary: #1E5FE0;
+  --color-navy: #1B2A4A;
+  --color-card-dark: #1B2A4A;
 
   --color-success: #15803d; /* green-700 */
   --color-success-bg: #f0fdf4; /* green-50 */
