@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
-import { storage } from "../lib/storage";
+import { useNavigate, Link } from "react-router";
 
 import RoleCard from "../components/auth/RoleCard";
 import Button from "../components/Button";
@@ -15,7 +14,6 @@ export default function Onboarding() {
 
   const handleNext = () => {
     if (!selectedRole) return;
-    storage.completeOnboarding();
     navigate(`/auth/register/${selectedRole}`);
   };
 
@@ -48,6 +46,12 @@ export default function Onboarding() {
         <Button onClick={handleNext} disabled={!selectedRole} className="mt-8">
           Next
         </Button>
+        <p className="text-center text-body-sm text-text-secondary mt-4">
+          Already have an account?{" "}
+          <Link to="/auth/login" className="text-primary font-semibold">
+            Sign In
+          </Link>
+        </p>
       </div>
     </div>
   );

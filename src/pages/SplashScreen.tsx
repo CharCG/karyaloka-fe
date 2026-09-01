@@ -9,23 +9,19 @@ export default function SplashScreen() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const isFirstTime = !storage.hasCompletedOnboarding();
       const isLoggedIn = storage.getAccessToken();
       const userRole = storage.getRole();
 
-      if (isFirstTime) {
-        navigate("/onboarding", { replace: true });
-      } else if (isLoggedIn) {
+      if (isLoggedIn) {
         if (userRole === "client") {
           navigate("/client", { replace: true });
         } else if (userRole === "freelancer") {
           navigate("/freelancer", { replace: true });
         } else {
-          // Fallback if token exists but no role is found
-          navigate("/auth/login", { replace: true });
+          navigate("/onboarding", { replace: true });
         }
       } else {
-        navigate("/auth/login", { replace: true });
+        navigate("/onboarding", { replace: true });
       }
     }, 2000);
 
