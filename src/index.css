@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2868d8;
+
+  --color-success: #15803d; /* green-700 */
+  --color-success-bg: #f0fdf4; /* green-50 */
+  --color-success-border: #bbf7d0; /* green-200 */
+
+  --color-info: #1d4ed8; /* blue-700 */
+  --color-info-bg: #eff6ff; /* blue-50 */
+  --color-info-border: #bfdbfe; /* blue-200 */
+
+  --color-warning: #b45309; /* amber-700 */
+  --color-warning-bg: #fffbeb; /* amber-50 */
+  --color-warning-border: #fde68a; /* amber-200 */
+
+  --color-error: #b91c1c; /* red-700 */
+  --color-error-bg: #fef2f2; /* red-50 */
+  --color-error-border: #fecaca; /* red-200 */
+
+  --color-text-primary: #10110e;
+  --color-text-secondary: #5c5c5c;
+  --color-text-tertiary: #8a8a8a;
+
+  --color-background-base: #f8f8f8;
+  --color-background-surface: #ffffff;
+
+  --color-border: #eeeeee;
+  --color-disabled: #b0b0b0;
+
+  --text-display: 2rem;
+  --text-display--line-height: 2.5rem;
+
+  --text-h1: 1.75rem;
+  --text-h1--line-height: 2.25rem;
+
+  --text-h2: 1.5rem;
+  --text-h2--line-height: 2rem;
+
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.75rem;
+
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.625rem;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.5rem;
+
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.25rem;
+
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1rem;
+
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-serif: "Times New Roman", serif;
+}
+
+body {
+  font-family: var(--font-sans);
+}
