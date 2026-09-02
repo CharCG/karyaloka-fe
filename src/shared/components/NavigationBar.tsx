@@ -38,7 +38,11 @@ export default function BottomNav({ role }: BottomNavProps) {
     <div className="fixed bottom-8 left-5 right-5 bg-background-surface/70 backdrop-blur-lg border border-border py-4 px-4 rounded-3xl">
       <div className="flex justify-around items-center">
         {navItems.map((item) => {
-          const isActive = location.pathname === item.path;
+          const isActive =
+            location.pathname === item.path ||
+            (item.path !== "/client" &&
+              item.path !== "/freelancer" &&
+              location.pathname.startsWith(`${item.path}/`));
           const IconComponent = isActive ? item.activeIcon : item.icon;
 
           return (

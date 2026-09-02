@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router";
 import { SplashScreen, Onboarding, TermsOfService, PrivacyPolicy } from "../features/onboarding";
 import { Login, RegisterClient, RegisterFreelancer, ForgotPassword, ResetPassword } from "../features/auth";
 import { ClientHome, PostProject } from "../features/client";
-import { FreelancerDiscover } from "../features/freelancer";
+import { FreelancerDiscover, FreelancerProjects, ProjectDetail } from "../features/freelancer";
 
 import ProtectedRoute from "./ProtectedRoute";
 import RoleRoute from "./RoleRoute";
@@ -37,7 +37,11 @@ export const router = createBrowserRouter([
       },
       {
         element: <RoleRoute allowedRoles={["freelancer"]} />,
-        children: [{ path: "/freelancer", element: <FreelancerDiscover /> }],
+        children: [
+          { path: "/freelancer", element: <FreelancerDiscover /> },
+          { path: "/freelancer/projects", element: <FreelancerProjects /> },
+          { path: "/freelancer/projects/:projectId", element: <ProjectDetail /> },
+        ],
       },
     ],
   },
