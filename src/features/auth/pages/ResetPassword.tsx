@@ -76,7 +76,7 @@ export default function ResetPassword() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 flex-1">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <Input
           label="New Password"
           type="password"
@@ -96,7 +96,7 @@ export default function ResetPassword() {
           required
         />
 
-        <div className="mt-auto">
+        <div className="mt-16">
           <Button type="submit" disabled={loading || success}>
             {loading ? "Resetting..." : "Reset"}
           </Button>

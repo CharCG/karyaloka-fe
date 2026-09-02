@@ -1,4 +1,4 @@
-import BackButton from "../../../shared/components/BackButton";
+import BackButton from "../../../shared/components/IconButton";
 
 export default function PrivacyPolicy() {
   return (

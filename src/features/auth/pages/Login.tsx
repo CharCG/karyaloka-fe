@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router";
 import { login } from "../api/auth";
 import { storage } from "../../../shared/lib/storage";
 
-import BackButton from "../../../shared/components/BackButton";
+import BackButton from "../../../shared/components/IconButton";
 import Button from "../../../shared/components/Button";
 import Input from "../../../shared/components/Input";
 
@@ -55,7 +55,7 @@ export default function Login() {
       </div>
 
       {error && (
-        <div className="mb-4 p-4 text-body-sm text-error bg-error-bg border border-error-border rounded-lg">
+        <div className="mb-8 p-4 text-body-sm text-error bg-error-bg border border-error-border rounded-lg">
           {error}
         </div>
       )}

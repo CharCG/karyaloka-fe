@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { forgotPassword } from "../api/auth";
 
-import BackButton from "../../../shared/components/BackButton";
+import BackButton from "../../../shared/components/IconButton";
 import Button from "../../../shared/components/Button";
 import Input from "../../../shared/components/Input";
 
@@ -60,7 +60,7 @@ export default function ForgotPassword() {
           </div>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="flex flex-col flex-1">
+        <form onSubmit={handleSubmit} className="flex flex-col">
           <div className="flex flex-col gap-4">
             <Input
               label="Email Address / Phone Number"
@@ -73,7 +73,7 @@ export default function ForgotPassword() {
             />
           </div>
 
-          <div className="mt-auto">
+          <div className="mt-16">
             <Button type="submit" disabled={loading}>
               {loading ? "Sending..." : "Send Reset Link"}
             </Button>

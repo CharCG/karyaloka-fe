@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router";
-import BottomNav from "../../../shared/components/NavigationBar";
+import BottomNav from "../../../shared/components/BottomNav";
 import ProjectsHeader from "../components/ProjectsHeader";
 import TabSwitcher, { type TabItem } from "../components/TabSwitcher";
 import ProjectCard, { type FreelancerProject } from "../components/ProjectCard";
@@ -16,12 +16,8 @@ export default function Projects() {
 
   // Tab count indicators
   const tabs: TabItem<TabKey>[] = useMemo(() => {
-    const activeCount = DUMMY_PROJECTS.filter(
-      (p) => p.status === "in_progress" || p.status === "submitted"
-    ).length;
-    const completedCount = DUMMY_PROJECTS.filter(
-      (p) => p.status === "completed"
-    ).length;
+    const activeCount = DUMMY_PROJECTS.filter((p) => p.status === "in_progress" || p.status === "submitted").length;
+    const completedCount = DUMMY_PROJECTS.filter((p) => p.status === "completed").length;
 
     return [
       { key: "all", label: "All", count: DUMMY_PROJECTS.length },
@@ -36,8 +32,7 @@ export default function Projects() {
       // Tab filter
       let matchesTab = true;
       if (activeTab === "active") {
-        matchesTab =
-          project.status === "in_progress" || project.status === "submitted";
+        matchesTab = project.status === "in_progress" || project.status === "submitted";
       } else if (activeTab === "completed") {
         matchesTab = project.status === "completed";
       }
@@ -45,9 +40,7 @@ export default function Projects() {
       // Search filter
       const query = searchQuery.trim().toLowerCase();
       const matchesSearch =
-        query === "" ||
-        project.title.toLowerCase().includes(query) ||
-        project.clientName.toLowerCase().includes(query);
+        query === "" || project.title.toLowerCase().includes(query) || project.clientName.toLowerCase().includes(query);
 
       return matchesTab && matchesSearch;
     });
@@ -75,16 +68,14 @@ export default function Projects() {
       case "active":
         return {
           title: "No active projects",
-          description:
-            "You don't have any ongoing or submitted projects right now.",
+          description: "You don't have any ongoing or submitted projects right now.",
           actionLabel: "Explore Jobs",
           onAction: () => navigate("/freelancer"),
         };
       case "completed":
         return {
           title: "No completed projects yet",
-          description:
-            "Finished jobs and your client reviews will be archived here.",
+          description: "Finished jobs and your client reviews will be archived here.",
           actionLabel: "Discover Projects",
           onAction: () => navigate("/freelancer"),
         };
@@ -92,8 +83,7 @@ export default function Projects() {
       default:
         return {
           title: "No projects found",
-          description:
-            "You haven't applied to any projects yet. Start discovering opportunities!",
+          description: "You haven't applied to any projects yet. Start discovering opportunities!",
           actionLabel: "Find Jobs",
           onAction: () => navigate("/freelancer"),
         };
@@ -114,11 +104,7 @@ export default function Projects() {
           onClearSearch={() => setSearchQuery("")}
         />
 
-        <TabSwitcher<TabKey>
-          tabs={tabs}
-          activeTab={activeTab}
-          onTabChange={(tab) => setActiveTab(tab)}
-        />
+        <TabSwitcher<TabKey> tabs={tabs} activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab)} />
       </header>
 
       {/* Main Content Area */}
@@ -126,24 +112,14 @@ export default function Projects() {
         {filteredProjects.length > 0 ? (
           <div className="flex flex-col gap-3 transition-opacity duration-200">
             {filteredProjects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                onClick={() => handleProjectCardClick(project)}
-              />
+              <ProjectCard key={project.id} project={project} onClick={() => handleProjectCardClick(project)} />
             ))}
           </div>
         ) : (
           /* Contextual Empty State */
           <div className="flex flex-col items-center justify-center text-center py-16 px-4">
             <div className="w-16 h-16 rounded-full bg-info-bg text-primary flex items-center justify-center mb-4">
-              <svg
-                className="w-8 h-8"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.75}
-              >
+              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -152,12 +128,8 @@ export default function Projects() {
               </svg>
             </div>
 
-            <h3 className="text-body font-bold text-text-primary mb-1">
-              {emptyState.title}
-            </h3>
-            <p className="text-body-sm text-text-secondary max-w-xs mb-6">
-              {emptyState.description}
-            </p>
+            <h3 className="text-body font-bold text-text-primary mb-1">{emptyState.title}</h3>
+            <p className="text-body-sm text-text-secondary max-w-xs mb-6">{emptyState.description}</p>
 
             <button
               type="button"

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import BottomNav from "../../../shared/components/NavigationBar";
+import BottomNav from "../../../shared/components/BottomNav";
 import DiscoverHeader from "../components/DiscoverHeader";
 import JobCardDeck from "../components/JobCardDeck";
 import ActionButtons from "../components/ActionButtons";
@@ -99,9 +99,7 @@ export default function Discover() {
     <div className="min-h-screen bg-background-base pb-28 flex flex-col justify-between">
       <div>
         {/* 1. Discover Top Bar */}
-        <DiscoverHeader
-          onFilterClick={() => setIsFilterOpen(true)}
-        />
+        <DiscoverHeader onFilterClick={() => setIsFilterOpen(true)} />
 
         {/* 2. Card Deck Container */}
         <main className="px-5 pt-4 max-w-md mx-auto w-full">
@@ -133,19 +131,12 @@ export default function Discover() {
       <BottomNav role="freelancer" />
 
       {/* 5. Filter Panel Bottom Sheet */}
-      <FilterPanel
-        isOpen={isFilterOpen}
-        onClose={() => setIsFilterOpen(false)}
-        onApply={handleApplyFilter}
-      />
+      <FilterPanel isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} onApply={handleApplyFilter} />
 
       {/* 6. Job Detail Modal (Triggered by 'i' button) */}
       {selectedJobDetail && (
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-xs">
-          <div
-            className="absolute inset-0"
-            onClick={() => setSelectedJobDetail(null)}
-          />
+          <div className="absolute inset-0" onClick={() => setSelectedJobDetail(null)} />
           <div className="relative w-full max-w-lg bg-background-surface rounded-t-3xl p-6 shadow-2xl z-10 max-h-[85vh] overflow-y-auto">
             <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4" />
 
@@ -162,25 +153,19 @@ export default function Discover() {
               </button>
             </div>
 
-            <h2 className="text-h2 font-bold text-text-primary mb-1">
-              {selectedJobDetail.title}
-            </h2>
+            <h2 className="text-h2 font-bold text-text-primary mb-1">{selectedJobDetail.title}</h2>
             <p className="text-body font-semibold text-text-secondary mb-3">
               {selectedJobDetail.clientName} • {selectedJobDetail.employmentType}
             </p>
 
             <div className="p-4 bg-gray-50 rounded-2xl border border-border mb-5">
               <span className="text-caption text-text-tertiary font-medium">Estimated Budget</span>
-              <p className="text-h3 font-bold text-primary mt-0.5">
-                {selectedJobDetail.budgetRange}
-              </p>
+              <p className="text-h3 font-bold text-primary mt-0.5">{selectedJobDetail.budgetRange}</p>
             </div>
 
             <div className="mb-5">
               <h3 className="text-body font-bold text-text-primary mb-2">Job Description</h3>
-              <p className="text-body-sm text-text-secondary leading-relaxed">
-                {selectedJobDetail.description}
-              </p>
+              <p className="text-body-sm text-text-secondary leading-relaxed">{selectedJobDetail.description}</p>
             </div>
 
             <div className="mb-6">

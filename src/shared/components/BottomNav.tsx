@@ -40,9 +40,7 @@ export default function BottomNav({ role }: BottomNavProps) {
         {navItems.map((item) => {
           const isActive =
             location.pathname === item.path ||
-            (item.path !== "/client" &&
-              item.path !== "/freelancer" &&
-              location.pathname.startsWith(`${item.path}/`));
+            (item.path !== "/client" && item.path !== "/freelancer" && location.pathname.startsWith(`${item.path}/`));
           const IconComponent = isActive ? item.activeIcon : item.icon;
 
           return (

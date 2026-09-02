@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router";
 import { register } from "../api/auth";
 import { storage } from "../../../shared/lib/storage";
 
-import BackButton from "../../../shared/components/BackButton";
+import BackButton from "../../../shared/components/IconButton";
 import Button from "../../../shared/components/Button";
 import Input from "../../../shared/components/Input";
 

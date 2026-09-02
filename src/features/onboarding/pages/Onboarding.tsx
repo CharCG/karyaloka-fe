@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router";
 
 import { RoleCard } from "../";
 import Button from "../../../shared/components/Button";
-import BackButton from "../../../shared/components/BackButton";
+import BackButton from "../../../shared/components/IconButton";
 
 import Client from "../../../assets/images/client.png";
 import Freelancer from "../../../assets/images/freelancer.png";
@@ -43,7 +43,7 @@ export default function Onboarding() {
           />
         </div>
 
-        <Button onClick={handleNext} disabled={!selectedRole} className="mt-8">
+        <Button onClick={handleNext} disabled={!selectedRole} className="mt-16">
           Next
         </Button>
         <p className="text-center text-body-sm text-text-secondary mt-4">

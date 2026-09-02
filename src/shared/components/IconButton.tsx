@@ -1,14 +1,21 @@
-import type { ButtonHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { useNavigate } from "react-router";
 
 import ArrowLeftIcon from "../../assets/icons/arrow-left.svg?react";
 
-interface BackButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "surface";
+  icon?: ReactNode;
   className?: string;
 }
 
-export default function BackButton({ variant = "primary", className = "", ...props }: BackButtonProps) {
+export default function IconButton({
+  variant = "primary",
+  icon = <ArrowLeftIcon className="w-6 h-6" />,
+  className = "",
+  onClick,
+  ...props
+}: IconButtonProps) {
   const navigate = useNavigate();
 
   const variantStyles = {
@@ -16,13 +23,21 @@ export default function BackButton({ variant = "primary", className = "", ...pro
     surface: "bg-background-surface text-primary border border-border",
   };
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (onClick) {
+      onClick(e);
+    } else {
+      navigate(-1);
+    }
+  };
+
   return (
     <button
-      onClick={() => navigate(-1)}
+      onClick={handleClick}
       className={`w-12 h-12 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity ${variantStyles[variant]} ${className}`}
       {...props}
     >
-      <ArrowLeftIcon className="w-6 h-6" />
+      {icon}
     </button>
   );
 }

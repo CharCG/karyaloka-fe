@@ -8,7 +8,7 @@ export default function Button({ children, disabled, className = "", ...props }:
   return (
     <button
       disabled={disabled}
-      className={`w-full py-4 rounded-lg text-body font-semibold text-background-surface transition-colors ${
+      className={`w-full py-4 rounded-lg text-body font-semibold text-background-surface cursor-pointer transition-colors ${
         disabled ? "bg-primary opacity-50 cursor-not-allowed" : "bg-primary"
       } ${className}`}
       {...props}

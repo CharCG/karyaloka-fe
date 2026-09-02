@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { JobItem } from "../components/JobCard";
+import type { JobItem } from "../components/ProjectCard";
 import type { OverviewData } from "../components/OverviewCard";
 
 export interface NewProjectPayload {
@@ -20,7 +20,7 @@ const INITIAL_JOBS: JobItem[] = [
   {
     id: "job-1",
     title: "Mobile App Design",
-    subtitle: "Freelancer: Dika Pratama",
+    subtitle: "Dika Pratama",
     status: "in_progress",
     statusLabel: "In Progress",
     iconBgColor: "bg-blue-100 text-primary",
@@ -28,9 +28,9 @@ const INITIAL_JOBS: JobItem[] = [
   {
     id: "job-2",
     title: "Landing Page Design",
-    subtitle: "5 interested",
-    status: "open",
-    statusLabel: "Open",
+    subtitle: "Dika Pratama",
+    status: "need_review",
+    statusLabel: "Need Review",
     iconBgColor: "bg-emerald-100 text-emerald-600",
   },
 ];

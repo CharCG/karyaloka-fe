@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router";
-import BackButton from "../../../shared/components/BackButton";
-import BottomNav from "../../../shared/components/NavigationBar";
+import BackButton from "../../../shared/components/IconButton";
+import BottomNav from "../../../shared/components/BottomNav";
 import StatusBadge from "../components/StatusBadge";
 import { type FreelancerProject } from "../components/ProjectCard";
 import { DUMMY_PROJECTS } from "../data/projectsData";
@@ -42,27 +42,15 @@ export default function ProjectDetail() {
         {/* Top bar */}
         <header className="sticky top-0 z-30 bg-background-surface pt-12 pb-3 px-5 border-b border-border/40 shadow-xs">
           <div className="flex items-center gap-3">
-            <BackButton
-              variant="surface"
-              onClick={handleGoBack}
-              aria-label="Back to projects"
-            />
-            <h1 className="text-h3 font-bold text-text-primary">
-              Project Detail
-            </h1>
+            <BackButton variant="surface" onClick={handleGoBack} aria-label="Back to projects" />
+            <h1 className="text-h3 font-bold text-text-primary">Project Detail</h1>
           </div>
         </header>
 
         {/* Not Found State */}
         <main className="flex-1 flex flex-col items-center justify-center p-6 text-center">
           <div className="w-16 h-16 rounded-full bg-error-bg text-error flex items-center justify-center mb-4">
-            <svg
-              className="w-8 h-8"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
+            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -70,9 +58,7 @@ export default function ProjectDetail() {
               />
             </svg>
           </div>
-          <h2 className="text-h3 font-bold text-text-primary mb-2">
-            Project Not Found
-          </h2>
+          <h2 className="text-h3 font-bold text-text-primary mb-2">Project Not Found</h2>
           <p className="text-body-sm text-text-secondary mb-6 max-w-xs">
             The project you are looking for does not exist or has been removed.
           </p>
@@ -99,14 +85,8 @@ export default function ProjectDetail() {
       {/* Sticky Top Bar */}
       <header className="sticky top-0 z-30 bg-background-surface pt-12 pb-3 px-5 border-b border-border/40 shadow-xs">
         <div className="flex items-center gap-3">
-          <BackButton
-            variant="surface"
-            onClick={handleGoBack}
-            aria-label="Back to projects"
-          />
-          <h1 className="text-h3 font-bold text-text-primary">
-            Project Detail
-          </h1>
+          <BackButton variant="surface" onClick={handleGoBack} aria-label="Back to projects" />
+          <h1 className="text-h3 font-bold text-text-primary">Project Detail</h1>
         </div>
       </header>
 
@@ -116,9 +96,7 @@ export default function ProjectDetail() {
           {/* Header Row: Title & Status Badge */}
           <div className="pb-5">
             <div className="flex items-start justify-between gap-3">
-              <h2 className="text-h3 font-bold text-primary flex-1 min-w-0">
-                {project.title}
-              </h2>
+              <h2 className="text-h3 font-bold text-primary flex-1 min-w-0">{project.title}</h2>
               <StatusBadge status={project.status} />
             </div>
             <p className="text-body-sm font-semibold text-text-secondary mt-1.5">
@@ -144,12 +122,11 @@ export default function ProjectDetail() {
                       d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  <span className="text-caption font-bold uppercase tracking-wider">
-                    Active Project in Progress
-                  </span>
+                  <span className="text-caption font-bold uppercase tracking-wider">Active Project in Progress</span>
                 </div>
                 <p className="text-body-sm text-amber-950 font-medium leading-snug">
-                  You are currently actively working on this project. Make sure all deliverables are submitted before the deadline ({project.deadline}).
+                  You are currently actively working on this project. Make sure all deliverables are submitted before
+                  the deadline ({project.deadline}).
                 </p>
               </div>
 
@@ -191,12 +168,11 @@ export default function ProjectDetail() {
                       d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
                     />
                   </svg>
-                  <span className="text-caption font-bold uppercase tracking-wider">
-                    Application Not Selected
-                  </span>
+                  <span className="text-caption font-bold uppercase tracking-wider">Application Not Selected</span>
                 </div>
                 <p className="text-body-sm text-red-950 font-medium leading-relaxed">
-                  The client has decided to proceed with another applicant for this role. Don't be discouraged — there are many open opportunities that match your skill set!
+                  The client has decided to proceed with another applicant for this role. Don't be discouraged — there
+                  are many open opportunities that match your skill set!
                 </p>
               </div>
 
@@ -215,9 +191,7 @@ export default function ProjectDetail() {
 
           {/* Section: Description */}
           <div className="py-4">
-            <h3 className="text-body font-semibold text-text-primary mb-1.5">
-              Description
-            </h3>
+            <h3 className="text-body font-semibold text-text-primary mb-1.5">Description</h3>
             <p className="text-body-sm text-text-secondary leading-relaxed whitespace-pre-line">
               {project.description}
             </p>
@@ -226,9 +200,7 @@ export default function ProjectDetail() {
           {/* Section: Skills */}
           {project.skills && project.skills.length > 0 && (
             <div className="py-4">
-              <h3 className="text-body font-semibold text-text-primary mb-2.5">
-                Skills
-              </h3>
+              <h3 className="text-body font-semibold text-text-primary mb-2.5">Skills</h3>
               <div className="flex flex-wrap gap-2">
                 {project.skills.map((skill) => (
                   <span
@@ -244,35 +216,23 @@ export default function ProjectDetail() {
 
           {/* Section: Budget */}
           <div className="py-4">
-            <h3 className="text-body font-semibold text-text-primary mb-1">
-              Budget
-            </h3>
-            <p className="text-h3 font-bold text-primary">
-              {project.budget}
-            </p>
+            <h3 className="text-body font-semibold text-text-primary mb-1">Budget</h3>
+            <p className="text-h3 font-bold text-primary">{project.budget}</p>
           </div>
 
           {/* Section: Deadline */}
           <div className="py-4">
-            <h3 className="text-body font-semibold text-text-primary mb-1">
-              Deadline
-            </h3>
-            <p className="text-body text-text-secondary font-medium">
-              {project.deadline}
-            </p>
+            <h3 className="text-body font-semibold text-text-primary mb-1">Deadline</h3>
+            <p className="text-body text-text-secondary font-medium">{project.deadline}</p>
           </div>
 
           {/* Section: Client Rating & Review (for completed projects) */}
           {isCompleted && typeof project.rating === "number" && (
             <div className="py-4">
-              <h3 className="text-body font-semibold text-text-primary mb-2">
-                Client Review
-              </h3>
+              <h3 className="text-body font-semibold text-text-primary mb-2">Client Review</h3>
               <div className="p-4 bg-amber-50 rounded-2xl border border-amber-200/80 flex items-center justify-between">
                 <div>
-                  <span className="text-caption text-amber-800 font-semibold uppercase tracking-wider">
-                    Rating
-                  </span>
+                  <span className="text-caption text-amber-800 font-semibold uppercase tracking-wider">Rating</span>
                   <p className="text-body-sm text-amber-950 font-medium mt-0.5">
                     "Great collaboration, highly recommended!"
                   </p>
@@ -287,9 +247,7 @@ export default function ProjectDetail() {
 
           {/* Metadata Footer: Posted Date & Last Updated */}
           <div className="pt-4 flex flex-col gap-1 text-caption text-text-tertiary">
-            {project.postedDate && (
-              <p>Posted {project.postedDate}</p>
-            )}
+            {project.postedDate && <p>Posted {project.postedDate}</p>}
             <p>Last Updated {project.lastUpdated}</p>
           </div>
         </div>
@@ -298,17 +256,12 @@ export default function ProjectDetail() {
       {/* Submit Deliverable Modal for in_progress */}
       {isSubmitModalOpen && (
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-xs">
-          <div
-            className="absolute inset-0"
-            onClick={() => setIsSubmitModalOpen(false)}
-          />
+          <div className="absolute inset-0" onClick={() => setIsSubmitModalOpen(false)} />
           <div className="relative w-full max-w-lg bg-background-surface rounded-t-3xl p-6 shadow-2xl z-10 max-h-[85vh] overflow-y-auto">
             <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4" />
 
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-h3 font-bold text-text-primary">
-                Submit Deliverables
-              </h3>
+              <h3 className="text-h3 font-bold text-text-primary">Submit Deliverables</h3>
               <button
                 type="button"
                 onClick={() => setIsSubmitModalOpen(false)}
@@ -325,9 +278,7 @@ export default function ProjectDetail() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h4 className="text-body font-bold text-text-primary mb-1">
-                  Deliverable Submitted!
-                </h4>
+                <h4 className="text-body font-bold text-text-primary mb-1">Deliverable Submitted!</h4>
                 <p className="text-body-sm text-text-secondary">
                   Your work has been submitted to the client for review.
                 </p>
@@ -349,9 +300,7 @@ export default function ProjectDetail() {
                 </div>
 
                 <div>
-                  <label className="block text-body-sm font-semibold text-text-primary mb-1">
-                    Notes for Client
-                  </label>
+                  <label className="block text-body-sm font-semibold text-text-primary mb-1">Notes for Client</label>
                   <textarea
                     rows={3}
                     placeholder="Describe what has been completed, key notes, or instructions for review..."
