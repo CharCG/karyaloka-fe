@@ -126,7 +126,7 @@ export default function ProjectDetail() {
             </p>
           </div>
 
-          {/* IMPROVEMENT: In Progress Status Banner & Progress Tracker */}
+          {/* IMPROVEMENT: In Progress Status Banner */}
           {isInProgress && (
             <div className="py-4">
               <div className="p-4 bg-warning-bg rounded-2xl border border-warning-border">
@@ -151,17 +151,6 @@ export default function ProjectDetail() {
                 <p className="text-body-sm text-amber-950 font-medium leading-snug">
                   You are currently actively working on this project. Make sure all deliverables are submitted before the deadline ({project.deadline}).
                 </p>
-
-                {/* Milestone Progress Bar */}
-                <div className="mt-3.5">
-                  <div className="flex justify-between text-caption font-semibold text-warning mb-1.5">
-                    <span>Current Milestone</span>
-                    <span>65% In Progress</span>
-                  </div>
-                  <div className="w-full h-2 bg-amber-200/80 rounded-full overflow-hidden">
-                    <div className="h-full bg-warning rounded-full transition-all duration-500 w-[65%]" />
-                  </div>
-                </div>
               </div>
 
               {/* Action Buttons for in_progress */}
@@ -184,7 +173,7 @@ export default function ProjectDetail() {
             </div>
           )}
 
-          {/* IMPROVEMENT: Rejected Status Notice & Encouragement */}
+          {/* IMPROVEMENT: Rejected Status Notice */}
           {isRejected && (
             <div className="py-4">
               <div className="p-4 bg-error-bg rounded-2xl border border-error-border">
@@ -209,11 +198,6 @@ export default function ProjectDetail() {
                 <p className="text-body-sm text-red-950 font-medium leading-relaxed">
                   The client has decided to proceed with another applicant for this role. Don't be discouraged — there are many open opportunities that match your skill set!
                 </p>
-
-                <div className="mt-3 pt-3 border-t border-error-border/60 text-caption text-red-900 flex items-start gap-2">
-                  <span className="font-bold">💡 Tip:</span>
-                  <span>Enhance your portfolio with case studies and keep applying to newly posted jobs on Discover.</span>
-                </div>
               </div>
 
               {/* Action Button for rejected */}
