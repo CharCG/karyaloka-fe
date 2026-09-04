@@ -1,9 +1,8 @@
 export { default as FreelancerDiscover } from "./pages/Discover";
 export { default as FreelancerProjects } from "./pages/Projects";
-export { default as ProjectDetail } from "./pages/ProjectDetail";
-export { default as ProjectsHeader } from "./components/ProjectsHeader";
-export { default as TabSwitcher } from "./components/TabSwitcher";
-export { default as ProjectCard } from "./components/ProjectCard";
-export { default as StatusBadge } from "./components/StatusBadge";
-
-
+export { default as FreelancerProjectDetail } from "./pages/ProjectDetail";
+export { default as FreelancerMessages } from "./pages/Messages";
+export { default as FreelancerProfile } from "./pages/Profile";
+export { default as FreelancerEditProfile } from "./pages/EditProfile";
+export { default as FreelancerWallet } from "./pages/Wallet";
+export { default as SwipeCardDeck } from "./components/SwipeCardDeck";

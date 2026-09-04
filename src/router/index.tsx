@@ -2,8 +2,28 @@ import { createBrowserRouter } from "react-router";
 
 import { SplashScreen, Onboarding, TermsOfService, PrivacyPolicy } from "../features/onboarding";
 import { Login, RegisterClient, RegisterFreelancer, ForgotPassword, ResetPassword } from "../features/auth";
-import { ClientHome, PostProject } from "../features/client";
-import { FreelancerDiscover, FreelancerProjects, ProjectDetail } from "../features/freelancer";
+import {
+  ClientHome,
+  PostProject,
+  ClientProfile,
+  ClientEditProfile,
+  ClientProjects,
+  ClientProjectDetail,
+  ClientMessages,
+  ClientChatRoom,
+  ClientCheckout,
+  ClientPaymentSuccess,
+  ClientCandidateProfile,
+} from "../features/client";
+import {
+  FreelancerDiscover,
+  FreelancerProjects,
+  FreelancerProjectDetail,
+  FreelancerMessages,
+  FreelancerProfile,
+  FreelancerEditProfile,
+  FreelancerWallet,
+} from "../features/freelancer";
 
 import ProtectedRoute from "./ProtectedRoute";
 import RoleRoute from "./RoleRoute";
@@ -33,6 +53,17 @@ export const router = createBrowserRouter([
         children: [
           { path: "/client", element: <ClientHome /> },
           { path: "/client/post-project", element: <PostProject /> },
+          { path: "/client/projects", element: <ClientProjects /> },
+          { path: "/client/projects/:projectId", element: <ClientProjectDetail /> },
+          { path: "/client/projects/:projectId/candidate/:freelancerUserId", element: <ClientCandidateProfile /> },
+          { path: "/client/projects/:projectId/checkout/:freelancerId", element: <ClientCheckout /> },
+          { path: "/client/projects/:projectId/payment/success", element: <ClientPaymentSuccess /> },
+          { path: "/client/payment/success", element: <ClientPaymentSuccess /> },
+          { path: "/payment/success", element: <ClientPaymentSuccess /> },
+          { path: "/client/messages", element: <ClientMessages /> },
+          { path: "/client/messages/:conversationId", element: <ClientChatRoom /> },
+          { path: "/client/profile", element: <ClientProfile /> },
+          { path: "/client/profile/edit", element: <ClientEditProfile /> },
         ],
       },
       {
@@ -40,7 +71,12 @@ export const router = createBrowserRouter([
         children: [
           { path: "/freelancer", element: <FreelancerDiscover /> },
           { path: "/freelancer/projects", element: <FreelancerProjects /> },
-          { path: "/freelancer/projects/:projectId", element: <ProjectDetail /> },
+          { path: "/freelancer/projects/:projectId", element: <FreelancerProjectDetail /> },
+          { path: "/freelancer/messages", element: <FreelancerMessages /> },
+          { path: "/freelancer/messages/:conversationId", element: <ClientChatRoom /> },
+          { path: "/freelancer/profile", element: <FreelancerProfile /> },
+          { path: "/freelancer/profile/edit", element: <FreelancerEditProfile /> },
+          { path: "/freelancer/wallet", element: <FreelancerWallet /> },
         ],
       },
     ],

@@ -23,7 +23,9 @@ export default function ForgotPassword() {
 
       setSuccess(true);
     } catch (err: any) {
-      setError(err.response?.data?.message || "Failed to send reset link. Please try again.");
+      const message = err.response?.data?.message;
+      const errorMessage = Array.isArray(message) ? message[0] : message;
+      setError(errorMessage || err.message || "Failed to send reset link. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -36,7 +38,7 @@ export default function ForgotPassword() {
       </div>
 
       <div className="mb-8">
-        <h1 className="text-h1 font-bold text-text-primary mb-2">Forgot Password</h1>
+        <h1 className="text-h1 font-semibold text-text-primary mb-2">Forgot Password</h1>
         <p className="text-body text-text-secondary">
           Enter your email address and we'll send you a link to reset your password.
         </p>
@@ -51,11 +53,11 @@ export default function ForgotPassword() {
       {success ? (
         <div className="flex flex-col flex-1">
           <div className="mb-8 p-4 text-body-sm text-success bg-success-bg rounded-lg border border-success-border">
-            Sent to <span className="font-semibold">{email}</span>.
+            Reset link sent to <span className="font-semibold">{email}</span> if the account exists.
           </div>
           <div className="mt-auto pt-8">
             <Link to="/auth/login">
-              <Button type="button">Back</Button>
+              <Button type="button">Back to Sign In</Button>
             </Link>
           </div>
         </div>
@@ -63,10 +65,10 @@ export default function ForgotPassword() {
         <form onSubmit={handleSubmit} className="flex flex-col">
           <div className="flex flex-col gap-4">
             <Input
-              label="Email Address / Phone Number"
+              label="Email Address"
               type="email"
               name="email"
-              placeholder="Enter your email or phone number"
+              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required

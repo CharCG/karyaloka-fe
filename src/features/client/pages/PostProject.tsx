@@ -1,17 +1,17 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router";
-import { useClientJobStore } from "../store/jobStore";
+import { useCreateProject } from "../api/projects";
 
 import HeaderBar from "../../../shared/components/HeaderBar";
 import Input from "../../../shared/components/Input";
 import Button from "../../../shared/components/Button";
-import SkillsPicker from "../components/SkillsPicker";
+import SkillsPicker from "../../../shared/components/SkillsPicker";
 
 import CalendarIcon from "../../../assets/icons/calendar.svg?react";
 
 export default function PostProject() {
   const navigate = useNavigate();
-  const addProject = useClientJobStore((state) => state.addProject);
+  const createProject = useCreateProject();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -20,9 +20,8 @@ export default function PostProject() {
     deadline: "",
   });
 
-  const [skills, setSkills] = useState<string[]>(["UI/UX", "Figma"]);
+  const [skills, setSkills] = useState<string[]>([]);
   const [error, setError] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,29 +42,26 @@ export default function PostProject() {
     }
 
     try {
-      setIsSubmitting(true);
       setError("");
 
-      addProject({
+      await createProject.mutateAsync({
         title: formData.title,
         description: formData.description,
         skills,
-        budget: formData.budget,
-        deadline: formData.deadline,
+        budget: Number(formData.budget),
+        deadline: new Date(formData.deadline).toISOString(),
       });
 
-      setTimeout(() => {
-        setIsSubmitting(false);
-        navigate("/client");
-      }, 300);
+      navigate("/client");
     } catch (err: any) {
-      setIsSubmitting(false);
-      setError(err.message || "Failed to post project. Please try again.");
+      const message = err.response?.data?.message;
+      const errorMessage = Array.isArray(message) ? message[0] : message;
+      setError(errorMessage || err.message || "Failed to post project. Please try again.");
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background-base">
+    <div className="min-h-screen flex flex-col bg-background-base pb-12">
       <HeaderBar title="Post Project" showBack variant="surface" />
 
       <div className="px-5 py-8 flex flex-col">
@@ -99,7 +95,7 @@ export default function PostProject() {
             label="Skills (add up to 10)"
             selectedSkills={skills}
             onChange={(newSkills) => setSkills(newSkills)}
-            required
+            isRequired
           />
 
           <Input
@@ -123,9 +119,9 @@ export default function PostProject() {
             leftIcon={<CalendarIcon className="w-6 h-6" />}
           />
 
-          <div className="mt-16">
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Posting..." : "Post"}
+          <div className="mt-6">
+            <Button type="submit" disabled={createProject.isPending}>
+              {createProject.isPending ? "Posting..." : "Post"}
             </Button>
           </div>
         </form>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 import { resetPassword } from "../api/auth";
 
@@ -18,12 +18,6 @@ export default function ResetPassword() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    if (!token) {
-      setError("Invalid or missing reset token.");
-    }
-  }, [token]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -33,6 +27,11 @@ export default function ResetPassword() {
 
     if (!token) {
       setError("Invalid or missing reset token.");
+      return;
+    }
+
+    if (formData.password.length < 8) {
+      setError("Password must be at least 8 characters");
       return;
     }
 
@@ -52,27 +51,31 @@ export default function ResetPassword() {
         navigate("/auth/login", { replace: true });
       }, 2000);
     } catch (err: any) {
-      setError(err.response?.data?.message || "Failed to reset password. Please try again.");
+      const message = err.response?.data?.message;
+      const errorMessage = Array.isArray(message) ? message[0] : message;
+      setError(errorMessage || err.message || "Failed to reset password. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
+  const displayError = !token ? "Invalid or missing reset token." : error;
+
   return (
     <div className="min-h-screen flex flex-col bg-background-base px-5 py-8">
       <div className="mb-8">
-        <h1 className="text-h1 font-bold text-text-primary mb-2">Create New Password</h1>
+        <h1 className="text-h1 font-semibold text-text-primary mb-2">Create New Password</h1>
         <p className="text-body text-text-secondary">Almost there. Let's set up a new password for your account.</p>
       </div>
 
-      {error && (
+      {displayError && (
         <div className="mb-4 p-4 text-body-sm text-error bg-error-bg border border-error-border rounded-lg">
-          {error}
+          {displayError}
         </div>
       )}
       {success && (
         <div className="mb-4 p-4 text-body-sm text-success bg-success-bg border border-success-border rounded-lg">
-          Reset successfully.
+          Password reset successfully. Redirecting to login...
         </div>
       )}
 
@@ -81,7 +84,7 @@ export default function ResetPassword() {
           label="New Password"
           type="password"
           name="password"
-          placeholder="Enter new password"
+          placeholder="Enter new password (min 8 characters)"
           value={formData.password}
           onChange={handleChange}
           required
@@ -97,8 +100,8 @@ export default function ResetPassword() {
         />
 
         <div className="mt-16">
-          <Button type="submit" disabled={loading || success}>
-            {loading ? "Resetting..." : "Reset"}
+          <Button type="submit" disabled={loading || success || !token}>
+            {loading ? "Resetting..." : "Reset Password"}
           </Button>
         </div>
       </form>

@@ -1,9 +1,9 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes, ReactNode, MouseEvent } from "react";
 import { useNavigate } from "react-router";
 
 import ArrowLeftIcon from "../../assets/icons/arrow-left.svg?react";
 
-interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "surface";
   icon?: ReactNode;
   className?: string;
@@ -23,7 +23,7 @@ export default function IconButton({
     surface: "bg-background-surface text-primary border border-border",
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (onClick) {
       onClick(e);
     } else {
@@ -34,7 +34,7 @@ export default function IconButton({
   return (
     <button
       onClick={handleClick}
-      className={`w-12 h-12 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity ${variantStyles[variant]} ${className}`}
+      className={`w-12 h-12 rounded-full flex items-center justify-center cursor-pointer active:opacity-80 ${variantStyles[variant]} ${className}`.trim()}
       {...props}
     >
       {icon}

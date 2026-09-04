@@ -1,148 +1,155 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
-import BottomNav from "../../../shared/components/BottomNav";
-import ProjectsHeader from "../components/ProjectsHeader";
-import TabSwitcher, { type TabItem } from "../components/TabSwitcher";
-import ProjectCard, { type FreelancerProject } from "../components/ProjectCard";
-import { DUMMY_PROJECTS } from "../data/projectsData";
+import Skeleton from "react-loading-skeleton";
+import { useGetFreelancerProjects, type FreelancerProject } from "../api/projects";
+import { type ProjectStatus } from "../../../shared/components/ProjectStatusBadge";
 
-type TabKey = "all" | "active" | "completed";
+import BottomNav from "../../../shared/components/BottomNav";
+import HeaderBar from "../../../shared/components/HeaderBar";
+import ProjectCard, { type ProjectItem } from "../../../shared/components/ProjectCard";
+import Input from "../../../shared/components/Input";
+
+import SearchIcon from "../../../assets/icons/magnifying-glass.svg?react";
+
+type ProjectTab = "all" | "active" | "completed";
+
+const tabs: { key: ProjectTab; label: string }[] = [
+  { key: "all", label: "All" },
+  { key: "active", label: "Active" },
+  { key: "completed", label: "Completed" },
+];
+
+function getFreelancerProjectStatus(project: FreelancerProject): { status: ProjectStatus; label: string } {
+  const projectStatus = (project.status || "").toUpperCase();
+  const appStatus = (project.applicationStatus || "").toUpperCase();
+
+  if (projectStatus === "COMPLETED") {
+    return { status: "completed", label: "Completed" };
+  }
+  if (projectStatus === "NEED_REVIEW") {
+    return { status: "need_review", label: "Need Review" };
+  }
+  if (projectStatus === "IN_PROGRESS") {
+    return { status: "in_progress", label: "In Progress" };
+  }
+  if (appStatus === "REJECTED") {
+    return { status: "rejected", label: "Rejected" };
+  }
+  if (appStatus === "WITHDRAWN") {
+    return { status: "closed", label: "Withdrawn" };
+  }
+  if (projectStatus === "CLOSED") {
+    return { status: "closed", label: "Closed" };
+  }
+  return { status: "applied", label: "Applied" };
+}
+
+function mapToProjectItem(project: FreelancerProject, navigate: (path: string) => void): ProjectItem {
+  const { status, label } = getFreelancerProjectStatus(project);
+  const clientName = project.client?.user?.name || "Client";
+
+  return {
+    id: project.id,
+    title: project.title,
+    status,
+    statusLabel: label,
+    budget: project.budget,
+    deadline: project.deadline,
+    assignedFreelancerName: `Client: ${clientName}`,
+    createdAt: project.createdAt,
+    updatedAt: project.updatedAt,
+    onClick: () => navigate(`/freelancer/projects/${project.id}`),
+  };
+}
 
 export default function Projects() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<TabKey>("all");
+  const [activeTab, setActiveTab] = useState<ProjectTab>("all");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Tab count indicators
-  const tabs: TabItem<TabKey>[] = useMemo(() => {
-    const activeCount = DUMMY_PROJECTS.filter((p) => p.status === "in_progress" || p.status === "submitted").length;
-    const completedCount = DUMMY_PROJECTS.filter((p) => p.status === "completed").length;
+  const tabParam = activeTab === "all" ? undefined : activeTab;
+  const { data: projects, isLoading } = useGetFreelancerProjects(tabParam);
 
-    return [
-      { key: "all", label: "All", count: DUMMY_PROJECTS.length },
-      { key: "active", label: "Active", count: activeCount },
-      { key: "completed", label: "Completed", count: completedCount },
-    ];
-  }, []);
-
-  // Filter projects based on activeTab and search query
-  const filteredProjects = useMemo(() => {
-    return DUMMY_PROJECTS.filter((project) => {
-      // Tab filter
-      let matchesTab = true;
-      if (activeTab === "active") {
-        matchesTab = project.status === "in_progress" || project.status === "submitted";
-      } else if (activeTab === "completed") {
-        matchesTab = project.status === "completed";
-      }
-
-      // Search filter
-      const query = searchQuery.trim().toLowerCase();
-      const matchesSearch =
-        query === "" || project.title.toLowerCase().includes(query) || project.clientName.toLowerCase().includes(query);
-
-      return matchesTab && matchesSearch;
-    });
-  }, [activeTab, searchQuery]);
-
-  // Navigate to project detail page
-  const handleProjectCardClick = (project: FreelancerProject) => {
-    navigate(`/freelancer/projects/${project.id}`, {
-      state: { project },
-    });
-  };
-
-  // Contextual empty state message
-  const getEmptyStateContent = () => {
-    if (searchQuery.trim() !== "") {
-      return {
-        title: "No matching projects",
-        description: `We couldn't find any projects matching "${searchQuery}".`,
-        actionLabel: "Clear Search",
-        onAction: () => setSearchQuery(""),
-      };
-    }
-
-    switch (activeTab) {
-      case "active":
-        return {
-          title: "No active projects",
-          description: "You don't have any ongoing or submitted projects right now.",
-          actionLabel: "Explore Jobs",
-          onAction: () => navigate("/freelancer"),
-        };
-      case "completed":
-        return {
-          title: "No completed projects yet",
-          description: "Finished jobs and your client reviews will be archived here.",
-          actionLabel: "Discover Projects",
-          onAction: () => navigate("/freelancer"),
-        };
-      case "all":
-      default:
-        return {
-          title: "No projects found",
-          description: "You haven't applied to any projects yet. Start discovering opportunities!",
-          actionLabel: "Find Jobs",
-          onAction: () => navigate("/freelancer"),
-        };
-    }
-  };
-
-  const emptyState = getEmptyStateContent();
+  const filteredProjects =
+    projects?.filter((p) => p.title.toLowerCase().includes(searchQuery.trim().toLowerCase())) || [];
 
   return (
-    <div className="min-h-screen bg-background-base pb-32 flex flex-col">
-      {/* Sticky Header Section */}
-      <header className="sticky top-0 z-30 bg-background-surface shadow-xs">
-        <ProjectsHeader
-          onSearchClick={() => setIsSearchOpen((prev) => !prev)}
-          isSearchOpen={isSearchOpen}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          onClearSearch={() => setSearchQuery("")}
-        />
+    <div className="min-h-screen flex flex-col bg-background-base pb-24">
+      <HeaderBar
+        title="Projects"
+        variant="surface"
+        className="border-b-0"
+        actionIcon={<SearchIcon className="w-8 h-8 text-primary" />}
+        onActionClick={() => setIsSearchOpen((prev) => !prev)}
+      />
 
-        <TabSwitcher<TabKey> tabs={tabs} activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab)} />
-      </header>
+      {isSearchOpen && (
+        <div className="px-5 pb-2 bg-background-surface border-b-0">
+          <Input
+            placeholder="Search projects by title..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            autoFocus
+          />
+        </div>
+      )}
 
-      {/* Main Content Area */}
-      <main className="flex-1 px-5 pt-4 max-w-md mx-auto w-full">
-        {filteredProjects.length > 0 ? (
-          <div className="flex flex-col gap-3 transition-opacity duration-200">
-            {filteredProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} onClick={() => handleProjectCardClick(project)} />
-            ))}
+      <div className="w-full bg-background-surface border-b border-border flex items-center justify-around px-5">
+        {tabs.map((tab) => {
+          const isActive = activeTab === tab.key;
+          return (
+            <button
+              key={tab.key}
+              type="button"
+              onClick={() => setActiveTab(tab.key)}
+              className={`relative py-4 px-6 text-body font-medium cursor-pointer text-center ${
+                isActive ? "text-primary" : "text-text-secondary"
+              }`}
+            >
+              <span>{tab.label}</span>
+              {isActive && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full" />}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="px-5 py-5 flex flex-col gap-4">
+        {isLoading ? (
+          Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="bg-background-surface rounded-lg p-5 border border-border flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <Skeleton width={140} height={20} borderRadius={4} />
+                <Skeleton width={60} height={24} borderRadius={12} />
+              </div>
+              <Skeleton width={180} height={16} borderRadius={4} />
+              <Skeleton width={120} height={14} borderRadius={4} />
+              <div className="flex items-center justify-between mt-1">
+                <Skeleton width={100} height={12} borderRadius={4} />
+                <Skeleton width={16} height={16} borderRadius={4} />
+              </div>
+            </div>
+          ))
+        ) : filteredProjects.length === 0 ? (
+          <div className="bg-background-surface rounded-lg p-8 border border-border text-center flex flex-col items-center justify-center gap-2 mt-4">
+            <p className="text-body font-semibold text-text-primary">No projects found</p>
+            <p className="text-body-sm text-text-secondary">
+              {searchQuery
+                ? "No projects match your search query."
+                : activeTab === "all"
+                  ? "You don't have any assigned projects yet."
+                  : activeTab === "active"
+                    ? "You don't have any active projects."
+                    : "You don't have any completed projects."}
+            </p>
           </div>
         ) : (
-          /* Contextual Empty State */
-          <div className="flex flex-col items-center justify-center text-center py-16 px-4">
-            <div className="w-16 h-16 rounded-full bg-info-bg text-primary flex items-center justify-center mb-4">
-              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6A2.25 2.25 0 004.887 20.25h14.226a2.25 2.25 0 002.213-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776"
-                />
-              </svg>
-            </div>
-
-            <h3 className="text-body font-bold text-text-primary mb-1">{emptyState.title}</h3>
-            <p className="text-body-sm text-text-secondary max-w-xs mb-6">{emptyState.description}</p>
-
-            <button
-              type="button"
-              onClick={emptyState.onAction}
-              className="px-5 py-2.5 bg-primary text-white text-body-sm font-semibold rounded-xl hover:bg-primary/90 transition-colors cursor-pointer shadow-xs"
-            >
-              {emptyState.actionLabel}
-            </button>
-          </div>
+          filteredProjects.map((project) => (
+            <ProjectCard key={project.id} project={mapToProjectItem(project, navigate)} variant="detailed" />
+          ))
         )}
-      </main>
+      </div>
 
-      {/* Reused Shared Bottom Navigation */}
       <BottomNav role="freelancer" />
     </div>
   );

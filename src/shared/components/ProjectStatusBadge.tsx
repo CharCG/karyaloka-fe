@@ -1,6 +1,14 @@
-export type ProjectStatus = "open" | "closed" | "in_progress" | "submitted" | "need_review";
+export type ProjectStatus =
+  | "open"
+  | "closed"
+  | "in_progress"
+  | "submitted"
+  | "need_review"
+  | "completed"
+  | "applied"
+  | "rejected";
 
-interface ProjectStatusBadgeProps {
+export interface ProjectStatusBadgeProps {
   status: ProjectStatus;
   statusLabel?: string;
   className?: string;
@@ -10,17 +18,19 @@ export default function ProjectStatusBadge({ status, statusLabel, className = ""
   const getStatusBadgeStyle = (s: ProjectStatus) => {
     switch (s) {
       case "open":
-        return "bg-emerald-50 text-emerald-700 border-emerald-200/60";
+      case "completed":
+        return "bg-success-bg text-success border-success-border";
       case "closed":
-        return "bg-slate-100 text-slate-600 border-slate-200/60";
+      case "rejected":
+        return "bg-error-bg text-error border-error-border";
       case "in_progress":
-        return "bg-info-bg text-info border-info-border";
-      case "submitted":
-        return "bg-purple-50 text-purple-700 border-purple-200/60";
       case "need_review":
-        return "bg-amber-50 text-amber-700 border-amber-200/60";
+        return "bg-warning-bg text-warning border-warning-border";
+      case "applied":
+      case "submitted":
+        return "bg-info-bg text-info border-info-border";
       default:
-        return "bg-gray-100 text-gray-700 border-gray-200/60";
+        return "bg-background-base text-text-secondary border-border";
     }
   };
 
@@ -29,6 +39,10 @@ export default function ProjectStatusBadge({ status, statusLabel, className = ""
     switch (s) {
       case "open":
         return "Open";
+      case "applied":
+        return "Applied";
+      case "rejected":
+        return "Rejected";
       case "closed":
         return "Closed";
       case "in_progress":
@@ -37,6 +51,8 @@ export default function ProjectStatusBadge({ status, statusLabel, className = ""
         return "Submitted";
       case "need_review":
         return "Need Review";
+      case "completed":
+        return "Completed";
       default:
         return s;
     }
@@ -44,7 +60,7 @@ export default function ProjectStatusBadge({ status, statusLabel, className = ""
 
   return (
     <span
-      className={`text-caption px-4 py-2 rounded-full border text-center ${getStatusBadgeStyle(status)} ${className}`}
+      className={`text-caption px-4 py-2 rounded-full border text-center ${getStatusBadgeStyle(status)} ${className}`.trim()}
     >
       {formatStatusText(status, statusLabel)}
     </span>

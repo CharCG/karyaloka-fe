@@ -1,18 +1,26 @@
-interface RoleCardProps {
+export interface RoleCardProps {
   title: string;
   description: string;
   image: string;
   selected: boolean;
-  onClick: () => void;
+  onClick?: () => void;
+  className?: string;
 }
 
-export default function RoleCard({ title, description, image, selected, onClick }: RoleCardProps) {
+export default function RoleCard({
+  title,
+  description,
+  image,
+  selected,
+  onClick,
+  className = "",
+}: RoleCardProps) {
   return (
     <div
       onClick={onClick}
       className={`flex items-center gap-4 py-4 px-4 border rounded-lg cursor-pointer transition-all ${
         selected ? "border-2 border-primary" : "border-border bg-background-surface"
-      }`}
+      } ${className}`.trim()}
     >
       <img src={image} alt={title} className="w-40" />
 

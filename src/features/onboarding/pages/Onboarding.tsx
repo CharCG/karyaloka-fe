@@ -22,7 +22,7 @@ export default function Onboarding() {
       <div className="bg-primary px-5 py-8 flex flex-col justify-center">
         <BackButton variant="surface" className="mb-8" />
         <h2 className="text-h2 italic font-serif text-background-surface">Hola!</h2>
-        <h1 className="text-h1 font-bold text-background-surface">What Brings You Here?</h1>
+        <h1 className="text-h1 font-semibold text-background-surface">What Brings You Here?</h1>
       </div>
 
       <div className="flex flex-col bg-background-base px-5 py-8">

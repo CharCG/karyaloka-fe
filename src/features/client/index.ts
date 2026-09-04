@@ -1,2 +1,11 @@
 export { default as ClientHome } from "./pages/Home";
 export { default as PostProject } from "./pages/PostProject";
+export { default as ClientProfile } from "./pages/Profile";
+export { default as ClientEditProfile } from "./pages/EditProfile";
+export { default as ClientProjects } from "./pages/Projects";
+export { default as ClientProjectDetail } from "./pages/ProjectDetail";
+export { default as ClientMessages } from "./pages/Messages";
+export { default as ClientChatRoom } from "./pages/ChatRoom";
+export { default as ClientCheckout } from "./pages/Checkout";
+export { default as ClientPaymentSuccess } from "./pages/PaymentSuccess";
+export { default as ClientCandidateProfile } from "./pages/CandidateProfile";

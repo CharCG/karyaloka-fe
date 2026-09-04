@@ -8,7 +8,7 @@ export default function PrivacyPolicy() {
       </div>
 
       <div className="mb-8">
-        <h1 className="text-h1 font-bold text-text-primary mb-2">Privacy Policy</h1>
+        <h1 className="text-h1 font-semibold text-text-primary mb-2">Privacy Policy</h1>
         <p className="text-body text-text-secondary">Last Updated: 1 September 2026</p>
       </div>
 

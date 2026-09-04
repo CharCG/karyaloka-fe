@@ -1,4 +1,4 @@
-interface SectionHeaderProps {
+export interface SectionHeaderProps {
   title: string;
   actionText?: string;
   onAction?: () => void;
@@ -7,7 +7,7 @@ interface SectionHeaderProps {
 
 export default function SectionHeader({ title, actionText, onAction, className = "" }: SectionHeaderProps) {
   return (
-    <div className={`flex items-center justify-between mb-4 ${className}`}>
+    <div className={`flex items-center justify-between mb-4 ${className}`.trim()}>
       <h2 className="text-h3 font-semibold text-text-primary">{title}</h2>
 
       {actionText && (

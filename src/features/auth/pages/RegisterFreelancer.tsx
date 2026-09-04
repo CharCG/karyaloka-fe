@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 import { register } from "../api/auth";
-import { storage } from "../../../shared/lib/storage";
 
 import BackButton from "../../../shared/components/IconButton";
 import Button from "../../../shared/components/Button";
 import Input from "../../../shared/components/Input";
 
-export default function RegisterClient() {
+export default function RegisterFreelancer() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
@@ -27,6 +26,11 @@ export default function RegisterClient() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (formData.password.length < 8) {
+      setError("Password must be at least 8 characters");
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
       return;
@@ -40,7 +44,7 @@ export default function RegisterClient() {
     try {
       setLoading(true);
       setError("");
-      const res = await register({
+      await register({
         fullName: formData.fullName,
         email: formData.email,
         password: formData.password,
@@ -48,11 +52,11 @@ export default function RegisterClient() {
         phone: formData.phone,
       });
 
-      storage.setAccessToken(res.accessToken);
-      storage.setRole(res.user.role);
       navigate("/freelancer", { replace: true });
     } catch (err: any) {
-      setError(err.response?.data?.message || "Failed to create account. Please try again.");
+      const message = err.response?.data?.message;
+      const errorMessage = Array.isArray(message) ? message[0] : message;
+      setError(errorMessage || err.message || "Failed to create account. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -66,7 +70,7 @@ export default function RegisterClient() {
 
       <div className="mb-8">
         <h2 className="text-h2 italic font-serif text-text-primary">Let's Work!</h2>
-        <h1 className="text-h1 font-bold text-text-primary mb-2">Create an Account</h1>
+        <h1 className="text-h1 font-semibold text-text-primary mb-2">Create an Account</h1>
         <p className="text-body text-text-secondary">Ready to get started? Let's set up your account.</p>
       </div>
 
@@ -106,7 +110,7 @@ export default function RegisterClient() {
           label="Password"
           type="password"
           name="password"
-          placeholder="Enter your password"
+          placeholder="Enter your password (min 8 characters)"
           value={formData.password}
           onChange={handleChange}
           required
@@ -141,7 +145,7 @@ export default function RegisterClient() {
           </label>
         </div>
 
-        <div className="mt-16">
+        <div className="mt-6">
           <Button type="submit" disabled={loading}>
             {loading ? "Creating Account..." : "Create Account"}
           </Button>

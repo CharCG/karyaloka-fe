@@ -10,11 +10,12 @@ import UserIcon from "../../assets/icons/user.svg?react";
 import UserSolidIcon from "../../assets/icons/user-solid.svg?react";
 import SearchIcon from "../../assets/icons/magnifying-glass.svg?react";
 
-interface BottomNavProps {
+export interface BottomNavProps {
   role: "client" | "freelancer";
+  className?: string;
 }
 
-export default function BottomNav({ role }: BottomNavProps) {
+export default function BottomNav({ role, className = "" }: BottomNavProps) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -35,7 +36,7 @@ export default function BottomNav({ role }: BottomNavProps) {
   const navItems = role === "client" ? clientNavItems : freelancerNavItems;
 
   return (
-    <div className="fixed bottom-8 left-5 right-5 bg-background-surface/70 backdrop-blur-lg border border-border py-4 px-4 rounded-3xl">
+    <div className={`fixed bottom-8 left-5 right-5 bg-background-surface/70 backdrop-blur-lg border border-border py-4 px-4 rounded-3xl ${className}`.trim()}>
       <div className="flex justify-around items-center">
         {navItems.map((item) => {
           const isActive =
@@ -47,7 +48,7 @@ export default function BottomNav({ role }: BottomNavProps) {
             <button
               key={item.label}
               onClick={() => navigate(item.path)}
-              className="flex flex-col items-center gap-1 cursor-pointer transition-colors"
+              className="flex flex-col items-center gap-1 cursor-pointer"
             >
               <IconComponent className={`w-6 h-6 ${isActive ? "text-primary" : "text-text-tertiary"}`} />
               <span className={`text-caption ${isActive ? "text-primary font-semibold" : "text-text-tertiary"}`}>

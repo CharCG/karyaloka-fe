@@ -8,6 +8,8 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   isTextArea?: boolean;
   requiredMark?: boolean;
   rows?: number;
+  containerClassName?: string;
+  className?: string;
 }
 
 export default function Input({
@@ -19,6 +21,7 @@ export default function Input({
   requiredMark,
   required,
   rows = 4,
+  containerClassName = "",
   className = "",
   id,
   ...props
@@ -27,11 +30,11 @@ export default function Input({
   const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined);
 
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className={`flex flex-col gap-2 w-full ${containerClassName}`.trim()}>
       {label && (
         <label htmlFor={inputId} className="text-body-sm font-semibold text-text-primary flex items-center gap-1">
           {label}
-          {isRequired && <span className="text-error font-bold">*</span>}
+          {isRequired && <span className="text-error font-semibold">*</span>}
         </label>
       )}
 
@@ -47,7 +50,7 @@ export default function Input({
         {isTextArea ? (
           <textarea
             id={inputId}
-            className={`w-full px-4 py-3 bg-transparent text-body text-text-primary placeholder:text-text-tertiary focus:outline-none resize-none rounded-lg ${className}`}
+            className={`w-full px-4 py-3 bg-transparent text-body text-text-primary placeholder:text-text-tertiary focus:outline-none resize-none rounded-lg ${className}`.trim()}
             rows={rows}
             {...(props as unknown as TextareaHTMLAttributes<HTMLTextAreaElement>)}
           />
@@ -56,7 +59,7 @@ export default function Input({
             id={inputId}
             className={`w-full px-4 py-3 bg-transparent text-body text-text-primary placeholder:text-text-tertiary focus:outline-none rounded-lg ${
               prefix ? "pl-2" : ""
-            } ${leftIcon ? "pl-2" : ""} ${rightIcon ? "pr-2" : ""} ${className}`}
+            } ${leftIcon ? "pl-2" : ""} ${rightIcon ? "pr-2" : ""} ${className}`.trim()}
             {...(props as InputHTMLAttributes<HTMLInputElement>)}
           />
         )}
