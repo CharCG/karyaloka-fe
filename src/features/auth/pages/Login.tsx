@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 import { login } from "../api/auth";
-import { storage } from "../../../shared/lib/storage";
 
-import BackButton from "../../../shared/components/BackButton";
+import BackButton from "../../../shared/components/IconButton";
 import Button from "../../../shared/components/Button";
 import Input from "../../../shared/components/Input";
 
@@ -31,13 +30,12 @@ export default function Login() {
         password: formData.password,
       });
 
-      storage.setAccessToken(res.accessToken);
-      storage.setRole(res.user.role);
-
       const destination = res.user.role === "client" ? "/client" : "/freelancer";
       navigate(destination, { replace: true });
     } catch (err: any) {
-      setError(err.response?.data?.message || "Invalid email or password.");
+      const message = err.response?.data?.message;
+      const errorMessage = Array.isArray(message) ? message[0] : message;
+      setError(errorMessage || err.message || "Invalid email or password.");
     } finally {
       setLoading(false);
     }
@@ -50,12 +48,12 @@ export default function Login() {
       </div>
 
       <div className="mb-8">
-        <h1 className="text-h1 font-bold text-text-primary mb-2">Sign In</h1>
+        <h1 className="text-h1 font-semibold text-text-primary mb-2">Sign In</h1>
         <p className="text-body text-text-secondary">Your next great match is waiting.</p>
       </div>
 
       {error && (
-        <div className="mb-4 p-4 text-body-sm text-error bg-error-bg border border-error-border rounded-lg">
+        <div className="mb-8 p-4 text-body-sm text-error bg-error-bg border border-error-border rounded-lg">
           {error}
         </div>
       )}
@@ -86,7 +84,7 @@ export default function Login() {
           </div>
         </div>
 
-        <div className="mt-16">
+        <div className="mt-6">
           <Button type="submit" disabled={loading}>
             {loading ? "Signing In..." : "Sign In"}
           </Button>

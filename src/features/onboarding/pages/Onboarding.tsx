@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 
-import { RoleCard } from "../";
+import RoleCard from "../components/RoleCard";
 import Button from "../../../shared/components/Button";
-import BackButton from "../../../shared/components/BackButton";
+import BackButton from "../../../shared/components/IconButton";
 
 import Client from "../../../assets/images/client.png";
 import Freelancer from "../../../assets/images/freelancer.png";
@@ -20,9 +20,11 @@ export default function Onboarding() {
   return (
     <div className="min-h-screen flex flex-col bg-background-base">
       <div className="bg-primary px-5 py-8 flex flex-col justify-center">
-        <BackButton variant="surface" className="mb-8" />
-        <h2 className="text-h2 italic font-serif text-background-surface">Hola!</h2>
-        <h1 className="text-h1 font-bold text-background-surface">What Brings You Here?</h1>
+        <BackButton variant="surface" aria-label="Go back" className="mb-8" />
+        <h1 className="text-h1 font-semibold text-background-surface">
+          <span className="block text-h2 italic font-serif text-background-surface/90 mb-1">Hola!</span>
+          What Brings You Here?
+        </h1>
       </div>
 
       <div className="flex flex-col bg-background-base px-5 py-8">
@@ -43,7 +45,7 @@ export default function Onboarding() {
           />
         </div>
 
-        <Button onClick={handleNext} disabled={!selectedRole} className="mt-8">
+        <Button onClick={handleNext} disabled={!selectedRole} className="mt-16">
           Next
         </Button>
         <p className="text-center text-body-sm text-text-secondary mt-4">

@@ -3,25 +3,25 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #1E5FE0;
-  --color-navy: #1B2A4A;
-  --color-card-dark: #1B2A4A;
+  --color-primary: #1e5fe0;
+  --color-navy: #1b2a4a;
+  --color-card-dark: #1b2a4a;
 
-  --color-success: #15803d; /* green-700 */
-  --color-success-bg: #f0fdf4; /* green-50 */
-  --color-success-border: #bbf7d0; /* green-200 */
+  --color-success: #16a34a;
+  --color-success-bg: #f0fdf4;
+  --color-success-border: #bbf7d0;
 
-  --color-info: #1d4ed8; /* blue-700 */
-  --color-info-bg: #eff6ff; /* blue-50 */
-  --color-info-border: #bfdbfe; /* blue-200 */
+  --color-info: #2563eb;
+  --color-info-bg: #eff6ff;
+  --color-info-border: #bfdbfe;
 
-  --color-warning: #b45309; /* amber-700 */
-  --color-warning-bg: #fffbeb; /* amber-50 */
-  --color-warning-border: #fde68a; /* amber-200 */
+  --color-warning: #d97706;
+  --color-warning-bg: #fffbeb;
+  --color-warning-border: #fde68a;
 
-  --color-error: #b91c1c; /* red-700 */
-  --color-error-bg: #fef2f2; /* red-50 */
-  --color-error-border: #fecaca; /* red-200 */
+  --color-error: #dc2626;
+  --color-error-bg: #fef2f2;
+  --color-error-border: #fecaca;
 
   --color-text-primary: #10110e;
   --color-text-secondary: #5c5c5c;

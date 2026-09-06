@@ -6,6 +6,7 @@ import { RouterProvider } from "react-router";
 import { queryClient } from "./shared/lib/query-client";
 import { router } from "./router";
 
+import "react-loading-skeleton/dist/skeleton.css";
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
