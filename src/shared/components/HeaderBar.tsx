@@ -6,7 +6,9 @@ import ArrowLeft from "../../assets/icons/arrow-left.svg?react";
 export interface HeaderBarProps {
   title?: string;
   showBack?: boolean;
+  backAriaLabel?: string;
   actionIcon?: ReactNode;
+  actionAriaLabel?: string;
   onActionClick?: () => void;
   variant?: "surface" | "transparent";
   className?: string;
@@ -15,7 +17,9 @@ export interface HeaderBarProps {
 export default function HeaderBar({
   title,
   showBack = false,
+  backAriaLabel = "Go back",
   actionIcon,
+  actionAriaLabel,
   onActionClick,
   variant = "surface",
   className = "",
@@ -30,17 +34,22 @@ export default function HeaderBar({
   const iconColor = variant === "transparent" ? "text-background-surface" : "text-primary";
 
   return (
-    <div className={`w-full py-5 px-5 flex items-center justify-between ${variantStyles[variant]} ${className}`.trim()}>
+    <header className={`w-full py-5 px-5 flex items-center justify-between ${variantStyles[variant]} ${className}`.trim()}>
       <div className="flex items-center gap-4">
         {showBack ? (
           <>
-            <button type="button" onClick={() => navigate(-1)} className="cursor-pointer">
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              aria-label={backAriaLabel}
+              className="cursor-pointer flex items-center justify-center"
+            >
               <ArrowLeft className={`w-7 h-7 ${iconColor}`} />
             </button>
-            <h3 className="text-h3 font-semibold">{title}</h3>
+            <h1 className="text-h3 font-semibold">{title}</h1>
           </>
         ) : (
-          <h2 className="text-h2 font-semibold">{title}</h2>
+          <h1 className="text-h2 font-semibold">{title}</h1>
         )}
       </div>
 
@@ -48,6 +57,7 @@ export default function HeaderBar({
         <button
           type="button"
           onClick={onActionClick}
+          aria-label={actionAriaLabel || (typeof title === "string" ? `${title} action` : "Action")}
           className={`flex items-center justify-center cursor-pointer ${
             variant === "transparent" ? "text-white" : "text-text-primary"
           }`}
@@ -55,6 +65,6 @@ export default function HeaderBar({
           {actionIcon}
         </button>
       )}
-    </div>
+    </header>
   );
 }

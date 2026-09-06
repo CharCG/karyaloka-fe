@@ -48,11 +48,22 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   const isCompact = variant === "compact";
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (project.onClick && (e.key === "Enter" || e.key === " ")) {
+      e.preventDefault();
+      project.onClick();
+    }
+  };
+
   if (isCompact) {
     return (
       <div
+        role={project.onClick ? "button" : undefined}
+        tabIndex={project.onClick ? 0 : undefined}
+        aria-label={project.onClick ? `${project.title} project details` : undefined}
         onClick={project.onClick}
-        className={`bg-background-surface rounded-lg p-4 border border-border flex items-center justify-between cursor-pointer active:bg-background-base/50 ${className}`.trim()}
+        onKeyDown={handleKeyDown}
+        className={`bg-background-surface rounded-lg p-4 border border-border flex items-center justify-between cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary active:bg-background-base/50 ${className}`.trim()}
       >
         <div className="flex flex-col gap-1 min-w-0 pr-3">
           <h3 className="text-body font-semibold text-text-primary truncate">{project.title}</h3>
@@ -78,8 +89,12 @@ export default function ProjectCard({
 
   return (
     <div
+      role={project.onClick ? "button" : undefined}
+      tabIndex={project.onClick ? 0 : undefined}
+      aria-label={project.onClick ? `${project.title} project details` : undefined}
       onClick={project.onClick}
-      className={`bg-background-surface rounded-lg p-5 border border-border flex flex-col gap-3 cursor-pointer active:bg-background-base/50 ${className}`.trim()}
+      onKeyDown={handleKeyDown}
+      className={`bg-background-surface rounded-lg p-5 border border-border flex flex-col gap-3 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary active:bg-background-base/50 ${className}`.trim()}
     >
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-body-lg font-semibold text-primary flex-1">{project.title}</h3>
@@ -105,9 +120,9 @@ export default function ProjectCard({
             : "No freelancer assigned")}
       </p>
 
-      <div className="flex items-center justify-between pt-1 text-caption text-text-tertiary">
+      <div className="flex items-center justify-between pt-1 text-caption text-text-secondary">
         <span>{project.createdAt ? `Posted ${formatShortDate(project.createdAt)}` : ""}</span>
-        <ChevronRightIcon className="w-4 h-4 text-text-tertiary" />
+        <ChevronRightIcon className="w-4 h-4 text-text-secondary" />
       </div>
     </div>
   );

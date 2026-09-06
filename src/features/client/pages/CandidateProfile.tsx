@@ -49,7 +49,13 @@ export default function CandidateProfile() {
           {isLoading ? (
             <Skeleton circle width={80} height={80} />
           ) : user?.avatarUrl ? (
-            <img src={user.avatarUrl} alt={displayName} className="w-20 h-20 rounded-full object-cover bg-white shrink-0" />
+            <img
+              src={user.avatarUrl}
+              alt={displayName}
+              width={80}
+              height={80}
+              className="w-20 h-20 rounded-full object-cover bg-white shrink-0"
+            />
           ) : (
             <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center text-h1 font-semibold text-primary shrink-0">
               {initials}

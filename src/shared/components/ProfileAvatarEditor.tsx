@@ -1,4 +1,4 @@
-﻿import type { ChangeEvent, RefObject } from "react";
+import type { ChangeEvent, RefObject } from "react";
 import PenIcon from "../../assets/icons/pen.svg?react";
 
 export interface ProfileAvatarEditorProps {
@@ -29,6 +29,8 @@ export default function ProfileAvatarEditor({
           <img
             src={previewUrl}
             alt="Profile"
+            width={96}
+            height={96}
             className="w-24 h-24 rounded-full object-cover border-2 border-border bg-background-surface"
           />
         ) : (
@@ -54,8 +56,8 @@ export default function ProfileAvatarEditor({
         ref={fileInputRef}
         onChange={onFileChange}
         accept="image/*"
+        aria-label="Upload profile picture"
         className="hidden"
-        aria-hidden="true"
       />
 
       <div className="flex items-center gap-3 text-body-sm">

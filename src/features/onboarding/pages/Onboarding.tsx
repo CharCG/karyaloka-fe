@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 
-import { RoleCard } from "../";
+import RoleCard from "../components/RoleCard";
 import Button from "../../../shared/components/Button";
 import BackButton from "../../../shared/components/IconButton";
 
@@ -20,9 +20,11 @@ export default function Onboarding() {
   return (
     <div className="min-h-screen flex flex-col bg-background-base">
       <div className="bg-primary px-5 py-8 flex flex-col justify-center">
-        <BackButton variant="surface" className="mb-8" />
-        <h2 className="text-h2 italic font-serif text-background-surface">Hola!</h2>
-        <h1 className="text-h1 font-semibold text-background-surface">What Brings You Here?</h1>
+        <BackButton variant="surface" aria-label="Go back" className="mb-8" />
+        <h1 className="text-h1 font-semibold text-background-surface">
+          <span className="block text-h2 italic font-serif text-background-surface/90 mb-1">Hola!</span>
+          What Brings You Here?
+        </h1>
       </div>
 
       <div className="flex flex-col bg-background-base px-5 py-8">

@@ -240,6 +240,7 @@ export default function SwipeCardDeck({
           disabled={!currentProject}
           className="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-background-base active:scale-95 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
           title="Skip Project"
+          aria-label="Skip Project"
         >
           <XIcon className="w-6 h-6 text-background-base" />
         </button>
@@ -250,6 +251,7 @@ export default function SwipeCardDeck({
           disabled={!currentProject}
           className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-background-base active:scale-95 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
           title="Project Information"
+          aria-label="Project Information"
         >
           <InfoIcon className="w-5 h-5 text-background-base" />
         </button>
@@ -260,6 +262,7 @@ export default function SwipeCardDeck({
           disabled={!currentProject}
           className="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-background-base active:scale-95 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
           title="Apply to Project"
+          aria-label="Apply to Project"
         >
           <HeartIcon className="w-7 h-7 text-background-base" />
         </button>

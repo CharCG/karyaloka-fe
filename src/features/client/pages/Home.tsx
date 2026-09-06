@@ -121,7 +121,7 @@ export default function Home() {
         )}
       </div>
 
-      <FAB to="/client/post-project" />
+      <FAB to="/client/post-project" aria-label="Post a project" />
       <BottomNav role="client" />
     </div>
   );

@@ -82,7 +82,13 @@ export default function Profile() {
           {isLoading ? (
             <Skeleton circle width={64} height={64} />
           ) : user?.avatarUrl ? (
-            <img src={user.avatarUrl} alt={displayName} className="w-16 h-16 rounded-full object-cover bg-white" />
+            <img
+              src={user.avatarUrl}
+              alt={displayName}
+              width={64}
+              height={64}
+              className="w-16 h-16 rounded-full object-cover bg-white"
+            />
           ) : (
             <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center text-h2 font-semibold text-primary">
               {initials}

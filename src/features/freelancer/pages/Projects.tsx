@@ -81,6 +81,7 @@ export default function Projects() {
         variant="surface"
         className="border-b-0"
         actionIcon={<SearchIcon className="w-8 h-8 text-primary" />}
+        actionAriaLabel="Search projects"
         onActionClick={() => setIsSearchOpen((prev) => !prev)}
       />
 
@@ -88,6 +89,7 @@ export default function Projects() {
         <div className="px-5 pb-2 bg-background-surface border-b-0">
           <Input
             placeholder="Search projects by title..."
+            aria-label="Search projects by title"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             autoFocus

@@ -27,7 +27,12 @@ export default function Input({
   ...props
 }: InputProps) {
   const isRequired = requiredMark ?? required;
-  const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined);
+  const inputId =
+    id ||
+    (props.name as string | undefined) ||
+    (label ? label.toLowerCase().replace(/[^a-z0-9]/g, "-") : undefined);
+  const accessibleLabel =
+    (props as any)["aria-label"] || (!label ? (props.placeholder as string | undefined) : undefined);
 
   return (
     <div className={`flex flex-col gap-2 w-full ${containerClassName}`.trim()}>
@@ -50,6 +55,7 @@ export default function Input({
         {isTextArea ? (
           <textarea
             id={inputId}
+            aria-label={accessibleLabel}
             className={`w-full px-4 py-3 bg-transparent text-body text-text-primary placeholder:text-text-tertiary focus:outline-none resize-none rounded-lg ${className}`.trim()}
             rows={rows}
             {...(props as unknown as TextareaHTMLAttributes<HTMLTextAreaElement>)}
@@ -57,6 +63,7 @@ export default function Input({
         ) : (
           <input
             id={inputId}
+            aria-label={accessibleLabel}
             className={`w-full px-4 py-3 bg-transparent text-body text-text-primary placeholder:text-text-tertiary focus:outline-none rounded-lg ${
               prefix ? "pl-2" : ""
             } ${leftIcon ? "pl-2" : ""} ${rightIcon ? "pr-2" : ""} ${className}`.trim()}

@@ -7,7 +7,14 @@ export interface FABProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
 }
 
-export default function FAB({ to, className = "", onClick, ...props }: FABProps) {
+export default function FAB({
+  to,
+  className = "",
+  onClick,
+  type = "button",
+  "aria-label": ariaLabel = "Create item",
+  ...props
+}: FABProps) {
   const navigate = useNavigate();
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -19,6 +26,8 @@ export default function FAB({ to, className = "", onClick, ...props }: FABProps)
 
   return (
     <button
+      type={type}
+      aria-label={ariaLabel}
       onClick={handleClick}
       className={`fixed bottom-28 right-6 w-14 h-14 bg-primary text-background-surface rounded-full flex items-center justify-center cursor-pointer z-40 active:scale-95 ${className}`.trim()}
       {...props}

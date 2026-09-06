@@ -14,6 +14,8 @@ export default function IconButton({
   icon = <ArrowLeftIcon className="w-6 h-6" />,
   className = "",
   onClick,
+  type = "button",
+  "aria-label": ariaLabel = "Go back",
   ...props
 }: IconButtonProps) {
   const navigate = useNavigate();
@@ -33,6 +35,8 @@ export default function IconButton({
 
   return (
     <button
+      type={type}
+      aria-label={ariaLabel}
       onClick={handleClick}
       className={`w-12 h-12 rounded-full flex items-center justify-center cursor-pointer active:opacity-80 ${variantStyles[variant]} ${className}`.trim()}
       {...props}

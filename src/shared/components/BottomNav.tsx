@@ -36,7 +36,10 @@ export default function BottomNav({ role, className = "" }: BottomNavProps) {
   const navItems = role === "client" ? clientNavItems : freelancerNavItems;
 
   return (
-    <div className={`fixed bottom-8 left-5 right-5 bg-background-surface/70 backdrop-blur-lg border border-border py-4 px-4 rounded-3xl ${className}`.trim()}>
+    <nav
+      aria-label="Bottom Navigation"
+      className={`fixed bottom-8 left-5 right-5 bg-background-surface/70 backdrop-blur-lg border border-border py-4 px-4 rounded-3xl ${className}`.trim()}
+    >
       <div className="flex justify-around items-center">
         {navItems.map((item) => {
           const isActive =
@@ -47,17 +50,20 @@ export default function BottomNav({ role, className = "" }: BottomNavProps) {
           return (
             <button
               key={item.label}
+              type="button"
               onClick={() => navigate(item.path)}
+              aria-label={item.label}
+              aria-current={isActive ? "page" : undefined}
               className="flex flex-col items-center gap-1 cursor-pointer"
             >
-              <IconComponent className={`w-6 h-6 ${isActive ? "text-primary" : "text-text-tertiary"}`} />
-              <span className={`text-caption ${isActive ? "text-primary font-semibold" : "text-text-tertiary"}`}>
+              <IconComponent className={`w-6 h-6 ${isActive ? "text-primary" : "text-text-secondary"}`} />
+              <span className={`text-caption ${isActive ? "text-primary font-semibold" : "text-text-secondary"}`}>
                 {item.label}
               </span>
             </button>
           );
         })}
       </div>
-    </div>
+    </nav>
   );
 }

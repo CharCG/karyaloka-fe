@@ -16,7 +16,7 @@ export default defineConfig({
         name: "Karyaloka",
         short_name: "Karyaloka",
         description: "Where Talent Meets Opportunity.",
-        theme_color: "#2566E0",
+        theme_color: "#1e5fe0",
         background_color: "#FFFFFF",
         display: "standalone",
         orientation: "portrait",
@@ -36,6 +36,23 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            if (id.includes("react") || id.includes("react-dom") || id.includes("react-router")) {
+              return "vendor-react";
+            }
+            if (id.includes("@tanstack/react-query") || id.includes("axios")) {
+              return "vendor-query";
+            }
+          }
+        },
+      },
+    },
+    chunkSizeWarningLimit: 600,
+  },
   server: {
     host: true,
     allowedHosts: true,

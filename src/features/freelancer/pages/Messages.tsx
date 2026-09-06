@@ -72,6 +72,7 @@ export default function Messages() {
         variant="surface"
         className="border-b-0"
         actionIcon={<SearchIcon className="w-8 h-8 text-primary" />}
+        actionAriaLabel="Search conversations"
         onActionClick={() => setIsSearchOpen((prev) => !prev)}
       />
 
@@ -79,6 +80,7 @@ export default function Messages() {
         <div className="px-5 pb-2 bg-background-surface border-b-0">
           <Input
             placeholder="Search conversations..."
+            aria-label="Search conversations"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             autoFocus

@@ -61,6 +61,7 @@ export default function SkillsPicker({
         <div className="flex-1 min-w-0">
           <Input
             placeholder="Type a skill and press Enter"
+            aria-label="New skill"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -74,6 +75,7 @@ export default function SkillsPicker({
           disabled={!inputValue.trim() || selectedSkills.length >= maxSkills}
           className="w-12 h-12 bg-primary text-white rounded-lg flex items-center justify-center shrink-0 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed active:opacity-90"
           title="Add skill"
+          aria-label="Add skill"
         >
           <PlusIcon className="w-5 h-5 text-white" />
         </button>
@@ -90,6 +92,7 @@ export default function SkillsPicker({
               <button
                 type="button"
                 onClick={() => handleRemoveSkill(skill)}
+                aria-label={`Remove skill ${skill}`}
                 className="cursor-pointer active:opacity-70"
               >
                 <XIcon className="w-3.5 h-3.5 text-text-secondary" />

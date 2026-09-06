@@ -28,16 +28,29 @@ export default function ChatListItem({
     .toUpperCase()
     .slice(0, 2);
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (onClick && (e.key === "Enter" || e.key === " ")) {
+      e.preventDefault();
+      onClick();
+    }
+  };
+
   return (
     <div
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      aria-label={onClick ? `Chat with ${participant.name}` : undefined}
       onClick={onClick}
-      className={`w-full p-4 flex items-center gap-4 cursor-pointer active:bg-background-base/50 border-b border-border last:border-b-0 ${className}`.trim()}
+      onKeyDown={handleKeyDown}
+      className={`w-full p-4 flex items-center gap-4 cursor-pointer focus:outline-none focus:bg-background-base/70 active:bg-background-base/50 border-b border-border last:border-b-0 ${className}`.trim()}
     >
       <div className="relative shrink-0">
         {participant.avatarUrl ? (
           <img
             src={participant.avatarUrl}
             alt={participant.name}
+            width={48}
+            height={48}
             className="w-12 h-12 rounded-full object-cover"
           />
         ) : (

@@ -40,6 +40,7 @@ export default function ChatBox({
         onChange={(e) => setText(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
+        aria-label={placeholder}
         disabled={isSending}
         className="flex-1 bg-background-base rounded-lg px-4 py-3 text-body text-text-primary placeholder:text-text-tertiary focus:outline-none border border-border focus:border-primary"
       />
@@ -47,6 +48,7 @@ export default function ChatBox({
       <button
         type="button"
         onClick={handleSend}
+        aria-label="Send message"
         disabled={!text.trim() || isSending}
         className="w-12 h-12 bg-primary text-white rounded-lg flex items-center justify-center shrink-0 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed active:opacity-90"
       >

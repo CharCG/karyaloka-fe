@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import Skeleton from "react-loading-skeleton";
 import { useGetProjectDetail } from "../api/projects";
 import { useInitiatePayment } from "../api/payment";
+import { loadSnapScript } from "../../../shared/lib/midtrans";
 
 import HeaderBar from "../../../shared/components/HeaderBar";
 import Button from "../../../shared/components/Button";
@@ -50,6 +51,10 @@ export default function Checkout() {
   const initiatePaymentMutation = useInitiatePayment();
 
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    loadSnapScript().catch(() => {});
+  }, []);
 
   if (isLoading || !project) {
     return (
@@ -155,6 +160,8 @@ export default function Checkout() {
                 <img
                   src={freelancerUser.avatarUrl}
                   alt={freelancerUser.name}
+                  width={48}
+                  height={48}
                   className="w-12 h-12 rounded-full object-cover"
                 />
               ) : (

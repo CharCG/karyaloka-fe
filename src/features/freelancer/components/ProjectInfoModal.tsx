@@ -31,13 +31,14 @@ export default function ProjectInfoModal({
   const clientName = project.client?.user?.name || "Client Partner";
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 backdrop-blur-xs p-4">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 backdrop-blur-xs p-4" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
       <div className="bg-background-surface rounded-2xl w-full max-w-md max-h-[85vh] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom duration-200">
         <div className="p-5 border-b border-border flex items-center justify-between">
-          <h3 className="text-body-lg font-semibold text-text-primary">Project Overview</h3>
+          <h3 id="project-modal-title" className="text-body-lg font-semibold text-text-primary">Project Overview</h3>
           <button
             type="button"
             onClick={onClose}
+            aria-label="Close dialog"
             className="w-8 h-8 rounded-full flex items-center justify-center active:bg-background-base text-text-secondary cursor-pointer"
           >
             <XIcon className="w-5 h-5" />
