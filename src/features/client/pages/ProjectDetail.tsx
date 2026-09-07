@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import Skeleton from "react-loading-skeleton";
-import {
-  useGetProjectDetail,
-  useGetProjectApplications,
-  useCloseProject,
-  useApproveCompletion,
-} from "../api/projects";
+import { useGetProjectDetail, useCloseProject, useApproveCompletion } from "../api/projects";
 import { useGetOrCreateConversation } from "../api/conversation";
 import { type ProjectStatus } from "../../../shared/components/ProjectStatusBadge";
 
@@ -52,7 +47,7 @@ export default function ProjectDetail() {
   const navigate = useNavigate();
 
   const { data: project, isLoading } = useGetProjectDetail(projectId || "");
-  const { data: candidateApps } = useGetProjectApplications(projectId || "");
+
   const closeProject = useCloseProject();
   const approveCompletion = useApproveCompletion();
   const getOrCreateConversation = useGetOrCreateConversation();
@@ -106,7 +101,7 @@ export default function ProjectDetail() {
   }
 
   const status = normalizeStatus(project.status);
-  const applicants = candidateApps && candidateApps.length > 0 ? candidateApps : project.applications || [];
+  const applicants = project.applications || [];
   const canClose = status === "open" && !project.assignedFreelancer;
 
   return (
@@ -205,7 +200,8 @@ export default function ProjectDetail() {
           <div className="bg-background-surface rounded-lg p-5 border border-border flex flex-col gap-2">
             <h4 className="text-body font-semibold text-text-primary">Work in Progress</h4>
             <p className="text-body-sm text-text-secondary leading-relaxed">
-              The assigned freelancer is currently working on this project. You will receive the deliverable link here once submitted.
+              The assigned freelancer is currently working on this project. You will receive the deliverable link here
+              once submitted.
             </p>
           </div>
         </div>
@@ -249,9 +245,7 @@ export default function ProjectDetail() {
             )}
 
             <div className="flex flex-col gap-2">
-              <label className="text-body-sm font-semibold text-text-primary">
-                Rate Freelancer Work (1 - 5 Stars)
-              </label>
+              <label className="text-body-sm font-semibold text-text-primary">Rate Freelancer Work (1 - 5 Stars)</label>
               <div className="flex items-center gap-2">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
@@ -263,16 +257,11 @@ export default function ProjectDetail() {
                     {star <= rating ? "⭐" : "☆"}
                   </button>
                 ))}
-                <span className="text-body-sm font-semibold text-text-primary ml-2">
-                  {rating}.0
-                </span>
+                <span className="text-body-sm font-semibold text-text-primary ml-2">{rating}.0</span>
               </div>
             </div>
 
-            <Button
-              onClick={handleApprove}
-              disabled={approveCompletion.isPending}
-            >
+            <Button onClick={handleApprove} disabled={approveCompletion.isPending}>
               {approveCompletion.isPending ? "Approving & Releasing..." : "Confirm & Release Payment"}
             </Button>
           </div>
@@ -325,12 +314,18 @@ export default function ProjectDetail() {
                 return (
                   <div
                     key={app.id}
-                    onClick={() => navigate(`/client/projects/${project.id}/candidate/${user.id}?projectId=${project.id}`)}
+                    onClick={() =>
+                      navigate(`/client/projects/${project.id}/candidate/${user.id}?projectId=${project.id}`)
+                    }
                     className="bg-background-surface p-4 border border-border flex items-center justify-between first:rounded-t-lg last:rounded-b-lg -mt-[1px] first:mt-0 cursor-pointer active:bg-background-base/50"
                   >
                     <div className="flex items-center gap-3 min-w-0 flex-1 mr-3">
                       {user.avatarUrl ? (
-                        <img src={user.avatarUrl} alt={user.name} className="w-10 h-10 rounded-full object-cover shrink-0" />
+                        <img
+                          src={user.avatarUrl}
+                          alt={user.name}
+                          className="w-10 h-10 rounded-full object-cover shrink-0"
+                        />
                       ) : (
                         <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-body-sm font-medium text-white shrink-0">
                           {initials}

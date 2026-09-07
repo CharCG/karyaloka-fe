@@ -23,7 +23,7 @@ export interface ApiResponse<T> {
 }
 
 const initiatePayment = async (payload: InitiatePaymentPayload): Promise<InitiatePaymentResponse> => {
-  const response = await apiClient.post<ApiResponse<InitiatePaymentResponse>>("/payments/initiate", payload);
+  const response = await apiClient.post<ApiResponse<InitiatePaymentResponse>>(`/payments/initiate`, payload);
   return response.data?.data || (response.data as unknown as InitiatePaymentResponse);
 };
 

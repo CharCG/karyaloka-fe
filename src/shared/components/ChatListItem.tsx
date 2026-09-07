@@ -1,7 +1,7 @@
 export interface ChatParticipant {
   id: string;
   name: string;
-  avatarUrl?: string | null;
+  avatarUrl?: string;
 }
 
 export interface ChatListItemProps {
@@ -67,14 +67,10 @@ export default function ChatListItem({
 
       <div className="flex-1 min-w-0 flex flex-col gap-1">
         <div className="flex items-center justify-between gap-2">
-          <h4 className="text-body font-semibold text-text-primary truncate">
-            {participant.name}
-          </h4>
+          <h4 className="text-body font-semibold text-text-primary truncate">{participant.name}</h4>
           {time && <span className="text-caption text-text-tertiary shrink-0">{time}</span>}
         </div>
-        <p className="text-body-sm text-text-secondary truncate">
-          {lastMessage || "No messages yet"}
-        </p>
+        <p className="text-body-sm text-text-secondary truncate">{lastMessage || "No messages yet"}</p>
       </div>
     </div>
   );

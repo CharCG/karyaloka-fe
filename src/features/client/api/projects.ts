@@ -140,21 +140,6 @@ const closeProject = async (projectId: string): Promise<Project> => {
   return response.data?.data || (response.data as unknown as Project);
 };
 
-const getProjectApplications = async (projectId: string): Promise<ProjectApplication[]> => {
-  const response = await apiClient.get<ApiResponse<ProjectApplication[]>>(`/projects/${projectId}/applications`);
-  return response.data?.data || (response.data as unknown as ProjectApplication[]);
-};
-
-export const useGetProjectApplications = (projectId: string) => {
-  return useQuery({
-    queryKey: ["client", "project", projectId, "applications"],
-    queryFn: () => getProjectApplications(projectId),
-    enabled: !!projectId,
-    staleTime: 0,
-    refetchOnMount: "always",
-  });
-};
-
 export const useGetClientDashboard = () => {
   return useQuery({
     queryKey: ["client", "dashboard"],
@@ -200,7 +185,6 @@ export const useCloseProject = () => {
       queryClient.invalidateQueries({ queryKey: ["client", "dashboard"] });
       queryClient.invalidateQueries({ queryKey: ["client", "projects"] });
       queryClient.invalidateQueries({ queryKey: ["client", "project", projectId] });
-      queryClient.invalidateQueries({ queryKey: ["client", "project", projectId, "applications"] });
     },
   });
 };

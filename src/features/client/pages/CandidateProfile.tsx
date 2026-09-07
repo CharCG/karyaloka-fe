@@ -22,13 +22,15 @@ export default function CandidateProfile() {
   const { data: user, isLoading } = useGetPublicProfile(freelancerUserId || "");
 
   const freelancer = user?.freelancerProfile;
-  const displayName = user?.name || "Freelancer";
+  const displayName = user?.name || "User";
   const initials = displayName
     .split(" ")
+    .filter(Boolean)
     .map((n) => n[0])
     .join("")
     .toUpperCase()
-    .slice(0, 2);
+    .slice(0, 2) || "F";
+  const avatarUrl = user?.avatarUrl;
 
   const activeProjects = freelancer?._count?.assignedProjects ?? 0;
   const completedProjects = freelancer?.completedCount ?? 0;
@@ -48,9 +50,9 @@ export default function CandidateProfile() {
         <div className="flex items-center gap-4 px-5 pt-2 pb-2">
           {isLoading ? (
             <Skeleton circle width={80} height={80} />
-          ) : user?.avatarUrl ? (
+          ) : avatarUrl ? (
             <img
-              src={user.avatarUrl}
+              src={avatarUrl}
               alt={displayName}
               width={80}
               height={80}

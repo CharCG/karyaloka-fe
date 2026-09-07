@@ -24,7 +24,7 @@ function EditProfileForm({ user }: EditProfileFormProps) {
   const [formData, setFormData] = useState({
     name: user.name || "",
     phone: user.phone || "",
-    description: user.clientProfile?.description || "",
+    description: user.description || user.clientProfile?.description || "",
     avatarUrl: user.avatarUrl || "",
   });
 
@@ -33,12 +33,13 @@ function EditProfileForm({ user }: EditProfileFormProps) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const initials = (formData.name || user.name || "C")
+  const initials = (formData.name || user.name || "User")
     .split(" ")
+    .filter(Boolean)
     .map((n) => n[0])
     .join("")
     .toUpperCase()
-    .slice(0, 2);
+    .slice(0, 2) || "C";
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -112,7 +113,7 @@ function EditProfileForm({ user }: EditProfileFormProps) {
       setSuccess(false);
 
       const trimmedAvatar = formData.avatarUrl.trim();
-      const hasOriginalAvatar = !!user.avatarUrl;
+      const hasOriginalAvatar = !!(user.avatarUrl);
       const avatarValue = trimmedAvatar ? trimmedAvatar : hasOriginalAvatar ? null : undefined;
 
       await updateProfile.mutateAsync({

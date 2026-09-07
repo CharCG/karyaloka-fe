@@ -106,8 +106,8 @@ export default function SwipeCardDeck({
     onSwipeLeft(currentProject);
   };
 
-  const clientName = currentProject?.client?.user?.name || "Client Partner";
-  const clientAvatar = currentProject?.client?.user?.avatarUrl;
+  const clientName = currentProject?.client?.user?.fullName || "Client Partner";
+  const clientAvatar = currentProject?.client?.user?.profilePhotoUrl;
   const clientInitials = clientName
     .split(" ")
     .map((n) => n[0])

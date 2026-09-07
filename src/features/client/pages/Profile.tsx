@@ -3,6 +3,7 @@ import Skeleton from "react-loading-skeleton";
 import { useGetMe } from "../api/user";
 import { useGetClientDashboard } from "../api/projects";
 import { logout } from "../../auth/api/auth";
+import { storage } from "../../../shared/lib/storage";
 
 import BottomNav from "../../../shared/components/BottomNav";
 import HeaderBar from "../../../shared/components/HeaderBar";
@@ -24,17 +25,24 @@ export default function Profile() {
     navigate("/auth/login", { replace: true });
   };
 
-  const displayName = user?.name || "Client";
+  const storedUser = storage.getUser();
+  const displayName = user?.name || storedUser?.name || "User";
   const roleLabel = user?.role === "FREELANCER" || user?.role === "freelancer" ? "Freelancer" : "Client";
   const initials = displayName
     .split(" ")
+    .filter(Boolean)
     .map((n) => n[0])
     .join("")
     .toUpperCase()
-    .slice(0, 2);
+    .slice(0, 2) || "C";
+  const avatarUrl = user?.avatarUrl;
 
   const activeCount = dashboardData?.overview?.activeCount ?? 0;
   const completedCount = dashboardData?.overview?.completedCount ?? 0;
+  const clientProfile = user?.clientProfile as any;
+  const totalSpentFormatted = clientProfile?.totalSpent && Number(clientProfile.totalSpent) > 0
+    ? `Rp${Number(clientProfile.totalSpent).toLocaleString("id-ID")}`
+    : "-";
 
   const isLoading = isUserLoading || isDashboardLoading;
 
@@ -64,9 +72,9 @@ export default function Profile() {
         <div className="flex items-center gap-4 px-5 pt-2 pb-2">
           {isUserLoading ? (
             <Skeleton circle width={64} height={64} />
-          ) : user?.avatarUrl ? (
+          ) : avatarUrl ? (
             <img
-              src={user.avatarUrl}
+              src={avatarUrl}
               alt={displayName}
               width={64}
               height={64}
@@ -100,7 +108,7 @@ export default function Profile() {
           isLoading={isLoading}
           stats={[
             { label: "Active", value: activeCount },
-            { label: "Total Spent", value: "-" },
+            { label: "Total Spent", value: totalSpentFormatted },
             { label: "Completed", value: completedCount },
           ]}
         />

@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "../../../shared/lib/client";
+import { storage } from "../../../shared/lib/storage";
 
 interface ApiResponse<T> {
   success: boolean;
@@ -12,6 +13,9 @@ export interface ClientProfileData {
   id: string;
   userId: string;
   description?: string | null;
+  totalSpent?: number | string;
+  activeJobsCount?: number;
+  completedJobsCount?: number;
 }
 
 export interface PortfolioItemData {
@@ -31,6 +35,8 @@ export interface FreelancerProfileData {
   skills: string[];
   rating: number;
   completedCount: number;
+  completedJobsCount?: number;
+  activeJobsCount?: number;
   totalEarning?: number;
   portfolioItems?: PortfolioItemData[];
   _count?: {
@@ -45,6 +51,7 @@ export interface UserProfile {
   phone?: string | null;
   role: string;
   avatarUrl?: string | null;
+  description?: string | null;
   createdAt: string;
   clientProfile?: ClientProfileData | null;
   freelancerProfile?: FreelancerProfileData | null;
@@ -57,6 +64,7 @@ export interface PublicUserProfile {
   phone?: string | null;
   role: string;
   avatarUrl?: string | null;
+  description?: string | null;
   freelancerProfile?: FreelancerProfileData | null;
   clientProfile?: ClientProfileData | null;
 }
@@ -70,18 +78,45 @@ export interface UpdateProfilePayload {
 }
 
 const getMe = async (): Promise<UserProfile> => {
-  const response = await apiClient.get<ApiResponse<UserProfile>>("/users/me");
-  return response.data?.data || (response.data as unknown as UserProfile);
+  const response = await apiClient.get<ApiResponse<any>>("/users/me");
+  const raw = response.data?.data || response.data;
+  if (!raw) return raw;
+
+  return {
+    ...raw,
+    description: raw.description || raw.clientProfile?.description || raw.freelancerProfile?.description || null,
+  };
 };
 
 const getPublicProfile = async (userId: string): Promise<PublicUserProfile> => {
-  const response = await apiClient.get<ApiResponse<PublicUserProfile>>(`/users/${userId}/profile`);
-  return response.data?.data || (response.data as unknown as PublicUserProfile);
+  const response = await apiClient.get<ApiResponse<any>>(`/users/${userId}/profile`);
+  const raw = response.data?.data || response.data;
+  if (!raw) return raw;
+
+  return {
+    ...raw,
+    description: raw.description || raw.clientProfile?.description || raw.freelancerProfile?.description || null,
+  };
 };
 
 const updateProfile = async (payload: UpdateProfilePayload): Promise<UserProfile> => {
-  const response = await apiClient.patch<ApiResponse<UserProfile>>("/users/me", payload);
-  return response.data?.data || (response.data as unknown as UserProfile);
+  const response = await apiClient.patch<ApiResponse<any>>("/users/me", payload);
+  const raw = response.data?.data || response.data;
+
+  const resolvedName = raw?.name || payload.name || "";
+  
+  const stored = storage.getUser();
+  if (stored && resolvedName) {
+    storage.setUser({
+      ...stored,
+      name: resolvedName,
+    });
+  }
+
+  return {
+    ...raw,
+    description: raw?.description || payload.description || raw?.clientProfile?.description || raw?.freelancerProfile?.description || null,
+  };
 };
 
 export const useGetMe = () => {

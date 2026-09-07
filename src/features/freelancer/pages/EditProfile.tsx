@@ -56,7 +56,7 @@ export default function EditProfile() {
     setFormData({
       name: user.name || "",
       phone: user.phone || "",
-      description: user.freelancerProfile?.description || "",
+      description: user.description || user.freelancerProfile?.description || "",
       avatarUrl: user.avatarUrl || "",
     });
     setSkills(user.freelancerProfile?.skills || []);
@@ -230,7 +230,7 @@ export default function EditProfile() {
     );
   }
 
-  const initials = (formData.name || user.name || "F")
+  const initials = (formData.name || user.name || "U")
     .split(" ")
     .map((n) => n[0])
     .join("")

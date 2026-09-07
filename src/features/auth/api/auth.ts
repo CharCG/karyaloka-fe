@@ -7,12 +7,12 @@ export type BackendRole = "CLIENT" | "FREELANCER";
 
 export interface User {
   id: string;
-  fullName: string;
+  name: string;
   email: string;
   role: Role;
   phone?: string;
-  profilePhotoUrl?: string;
-  bio?: string;
+  avatarUrl?: string;
+  description?: string;
 }
 
 export interface BackendLoginData {
@@ -37,7 +37,7 @@ export interface LoginPayload {
 }
 
 export interface RegisterPayload {
-  fullName: string;
+  name: string;
   email: string;
   password: string;
   role: Role;
@@ -73,12 +73,12 @@ export const login = async (payload: LoginPayload): Promise<AuthResponse> => {
     accessToken,
     user: {
       id: userObj.id || raw.userId || "",
-      fullName: userObj.fullName || raw.name || "",
+      name: userObj.name || "",
       email: userObj.email || payload.email,
       role: normalizedRole,
       phone: userObj.phone,
-      profilePhotoUrl: userObj.profilePhotoUrl || userObj.avatarUrl,
-      bio: userObj.bio,
+      avatarUrl: userObj.avatarUrl,
+      description: userObj.description,
     },
   };
 
@@ -86,7 +86,7 @@ export const login = async (payload: LoginPayload): Promise<AuthResponse> => {
   storage.setRole(authResponse.user.role);
   storage.setUser({
     id: authResponse.user.id,
-    name: authResponse.user.fullName,
+    name: authResponse.user.name,
     email: authResponse.user.email,
     role: authResponse.user.role,
   });
@@ -98,7 +98,7 @@ export const register = async (payload: RegisterPayload): Promise<AuthResponse> 
   const role = payload.role.toLowerCase() as Role;
 
   const response = await apiClient.post<any>("/auth/register", {
-    fullName: payload.fullName,
+    name: payload.name,
     email: payload.email,
     password: payload.password,
     role,
@@ -116,12 +116,12 @@ export const register = async (payload: RegisterPayload): Promise<AuthResponse> 
       accessToken,
       user: {
         id: userObj.id || "",
-        fullName: userObj.fullName || payload.fullName,
+        name: userObj.name || payload.name,
         email: userObj.email || payload.email,
         role: normalizedRole,
         phone: userObj.phone || payload.phone,
-        profilePhotoUrl: userObj.profilePhotoUrl,
-        bio: userObj.bio,
+        avatarUrl: userObj.avatarUrl,
+        description: userObj.description,
       },
     };
 
@@ -129,7 +129,7 @@ export const register = async (payload: RegisterPayload): Promise<AuthResponse> 
     storage.setRole(authResponse.user.role);
     storage.setUser({
       id: authResponse.user.id,
-      name: authResponse.user.fullName,
+      name: authResponse.user.name,
       email: authResponse.user.email,
       role: authResponse.user.role,
     });
@@ -161,12 +161,12 @@ export const getCurrentUser = async (): Promise<User> => {
   const data = response.data?.data || response.data;
   return {
     id: data.id,
-    fullName: data.fullName || data.name || "",
+    name: data.name || "",
     email: data.email,
     role: (data.role?.toLowerCase() || "client") as Role,
     phone: data.phone,
-    profilePhotoUrl: data.profilePhotoUrl || data.avatarUrl,
-    bio: data.bio || data.clientProfile?.description || data.freelancerProfile?.description,
+    avatarUrl: data.avatarUrl,
+    description: data.description || data.clientProfile?.description || data.freelancerProfile?.description,
   };
 };
 

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import Skeleton from "react-loading-skeleton";
 import { useGetMe } from "../../client/api/user";
 import { logout } from "../../auth/api/auth";
+import { storage } from "../../../shared/lib/storage";
 
 import BottomNav from "../../../shared/components/BottomNav";
 import HeaderBar from "../../../shared/components/HeaderBar";
@@ -37,13 +38,16 @@ export default function Profile() {
     navigate("/auth/login", { replace: true });
   };
 
-  const displayName = user?.name || "Freelancer";
+  const storedUser = storage.getUser();
+  const displayName = user?.name || storedUser?.name || "User";
   const initials = displayName
     .split(" ")
+    .filter(Boolean)
     .map((n) => n[0])
     .join("")
     .toUpperCase()
-    .slice(0, 2);
+    .slice(0, 2) || "F";
+  const avatarUrl = user?.avatarUrl;
 
   const freelancer = user?.freelancerProfile;
   const completedCount = freelancer?.completedCount ?? 0;
@@ -81,9 +85,9 @@ export default function Profile() {
         <div className="flex items-center gap-4 px-5 pt-2 pb-2">
           {isLoading ? (
             <Skeleton circle width={64} height={64} />
-          ) : user?.avatarUrl ? (
+          ) : avatarUrl ? (
             <img
-              src={user.avatarUrl}
+              src={avatarUrl}
               alt={displayName}
               width={64}
               height={64}

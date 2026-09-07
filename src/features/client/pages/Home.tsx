@@ -34,7 +34,7 @@ function formatStatusLabel(rawStatus: string): string {
 function mapToProjectItem(project: ClientDashboardProject, navigate: (path: string) => void): ProjectItem {
   const status = normalizeStatus(project.status);
   const applicantCount = project._count?.applications ?? 0;
-  const freelancerName = project.assignedFreelancer?.user?.name;
+  const freelancerName = project.assignedFreelancer?.user?.fullName;
 
   return {
     id: project.id,
@@ -56,7 +56,7 @@ export default function Home() {
   const navigate = useNavigate();
   const { data: user } = useGetMe();
   const storedUser = storage.getUser();
-  const userName = user?.name || storedUser?.name || "Client";
+  const userName = user?.fullName || storedUser?.fullName || "User";
 
   const { data: dashboard, isLoading } = useGetClientDashboard();
 

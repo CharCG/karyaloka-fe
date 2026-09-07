@@ -41,7 +41,7 @@ function formatStatusLabel(rawStatus: string): string {
 function mapToProjectItem(project: ClientListProject, navigate: (path: string) => void): ProjectItem {
   const status = normalizeStatus(project.status);
   const applicantCount = project._count?.applications ?? 0;
-  const freelancerName = project.assignedFreelancer?.user?.name;
+  const freelancerName = project.assignedFreelancer?.user?.fullName;
 
   return {
     id: project.id,
