@@ -102,11 +102,19 @@ export default function ProjectDetail() {
   };
 
   const handleChat = async () => {
-    if (!client?.id) return;
+    const targetUserId = client?.id || (project.client as any)?.userId;
+    if (!targetUserId) {
+      setError("Unable to start chat: client information not found.");
+      return;
+    }
     try {
-      const conv = await getOrCreateConversation.mutateAsync(client.id);
+      setError("");
+      const conv = await getOrCreateConversation.mutateAsync(targetUserId);
       navigate(`/freelancer/messages/${conv.id}`);
-    } catch {}
+    } catch (err: any) {
+      const message = err.response?.data?.message || err.message || "Failed to open chat.";
+      setError(Array.isArray(message) ? message[0] : message);
+    }
   };
 
   const handleSubmitDeliverable = async () => {
@@ -209,9 +217,10 @@ export default function ProjectDetail() {
             <button
               type="button"
               onClick={handleChat}
-              className="px-4 py-2 border border-border rounded-lg text-body-sm font-semibold text-primary cursor-pointer active:bg-background-base"
+              disabled={getOrCreateConversation.isPending}
+              className="px-4 py-2 border border-border rounded-lg text-body-sm font-semibold text-primary cursor-pointer active:bg-background-base disabled:opacity-50"
             >
-              Chat
+              {getOrCreateConversation.isPending ? "Opening..." : "Chat"}
             </button>
           </div>
         )}

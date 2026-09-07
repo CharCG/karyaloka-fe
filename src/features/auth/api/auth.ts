@@ -157,7 +157,7 @@ export const resetPassword = async (token: string, newPassword: string): Promise
 };
 
 export const getCurrentUser = async (): Promise<User> => {
-  const response = await apiClient.get<ApiResponse<any>>("/auth/me");
+  const response = await apiClient.get<ApiResponse<any>>("/users/me");
   const data = response.data?.data || response.data;
   return {
     id: data.id,

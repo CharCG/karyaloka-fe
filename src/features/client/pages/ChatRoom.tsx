@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useParams } from "react-router";
 import Skeleton from "react-loading-skeleton";
-import { useGetMessages, useSendMessage, useMarkAsRead } from "../api/conversation";
+import { useGetMessages, useSendMessage, useMarkAsRead, useGetConversations } from "../api/conversation";
 import { useGetCurrentUser } from "../../auth/api/auth";
 import { storage } from "../../../shared/lib/storage";
 
@@ -21,6 +21,7 @@ export default function ChatRoom() {
   const currentUserId = currentUser?.id || storage.getUser()?.id;
 
   const { data, isLoading } = useGetMessages(conversationId || "");
+  const { data: conversations } = useGetConversations();
   const sendMessageMutation = useSendMessage();
   const { mutate: markAsRead } = useMarkAsRead();
 
@@ -36,7 +37,13 @@ export default function ChatRoom() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages.length]);
 
-  const otherParticipant = messages.find((m) => m.senderId !== currentUserId)?.sender;
+  const conv = conversations?.find((c) => c.id === conversationId);
+  const conversationPartner = conv
+    ? conv.participantA?.id === currentUserId
+      ? conv.participantB
+      : conv.participantA
+    : null;
+  const otherParticipant = messages.find((m) => m.senderId !== currentUserId)?.sender || conversationPartner;
   const chatTitle = otherParticipant?.name || "Chat";
 
   const handleSend = async (content: string) => {
