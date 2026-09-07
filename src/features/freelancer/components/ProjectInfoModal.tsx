@@ -28,7 +28,7 @@ export default function ProjectInfoModal({
 }: ProjectInfoModalProps) {
   if (!isOpen || !project) return null;
 
-  const clientName = project.client?.user?.fullName || "Client Partner";
+  const clientName = project.client?.user?.name || "Client Partner";
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 backdrop-blur-xs p-4" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">

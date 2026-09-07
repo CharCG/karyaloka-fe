@@ -3,8 +3,8 @@ import { apiClient } from "../../../shared/lib/client";
 
 export interface ParticipantUser {
   id: string;
-  fullName: string;
-  profilePhotoUrl?: string | null;
+  name: string;
+  avatarUrl?: string | null;
 }
 
 export interface LastMessage {

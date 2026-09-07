@@ -46,7 +46,7 @@ function getFreelancerProjectStatus(project: FreelancerProject): { status: Proje
 
 function mapToProjectItem(project: FreelancerProject, navigate: (path: string) => void): ProjectItem {
   const { status, label } = getFreelancerProjectStatus(project);
-  const clientName = project.client?.user?.fullName || "Client";
+  const clientName = project.client?.user?.name || "Client";
 
   return {
     id: project.id,

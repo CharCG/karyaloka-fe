@@ -1,7 +1,7 @@
 export interface ChatParticipant {
   id: string;
   name: string;
-  avatarUrl?: string;
+  avatarUrl?: string | null;
 }
 
 export interface ChatListItemProps {

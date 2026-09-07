@@ -15,6 +15,7 @@ export interface DiscoverProject {
     user: {
       id: string;
       name: string;
+      avatarUrl?: string | null;
     };
   };
 }
@@ -46,6 +47,7 @@ export interface FreelancerProject {
     user: {
       id: string;
       name: string;
+      avatarUrl?: string | null;
     };
   };
 }

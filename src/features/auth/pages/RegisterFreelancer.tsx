@@ -9,7 +9,7 @@ import Input from "../../../shared/components/Input";
 export default function RegisterFreelancer() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
     email: "",
     phone: "",
     password: "",
@@ -45,7 +45,7 @@ export default function RegisterFreelancer() {
       setLoading(true);
       setError("");
       await register({
-        fullName: formData.fullName,
+        name: formData.name,
         email: formData.email,
         password: formData.password,
         role: "freelancer",
@@ -83,9 +83,9 @@ export default function RegisterFreelancer() {
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <Input
           label="Full Name"
-          name="fullName"
+          name="name"
           placeholder="Enter your full name"
-          value={formData.fullName}
+          value={formData.name}
           onChange={handleChange}
           required
         />

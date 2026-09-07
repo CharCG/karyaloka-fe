@@ -59,7 +59,7 @@ export default function ProjectDetail() {
   const clientName = client?.name || "Client";
   const clientInitials = clientName
     .split(" ")
-    .map((n) => n[0])
+    .map((n: any) => n[0])
     .join("")
     .toUpperCase()
     .slice(0, 2);
